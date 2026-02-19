@@ -1,10 +1,11 @@
-import React from 'react';
-import { Text, View } from 'react-native';
+import Navigation from '@/navigation/Navigation'
+import Providers from '@/providers/Providers'
+import React from 'react'
 
 export default function App() {
-  return (
-    <View>
-      <Text>App</Text>
-    </View>
-  );
+	return (
+		<Providers>
+			<Navigation />
+		</Providers>
+	)
 }
