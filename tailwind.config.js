@@ -1,3 +1,5 @@
+const { COLORS } = require('./src/constants/colors.constant')
+
 module.exports = {
 	content: [
 		'./App.tsx',
@@ -6,7 +8,11 @@ module.exports = {
 	],
 	presets: [require('nativewind/preset')],
 	theme: {
-		extend: {}
+		extend: {
+			colors: {
+				...COLORS
+			}
+		}
 	},
 	plugins: []
 }

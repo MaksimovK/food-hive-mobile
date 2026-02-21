@@ -1,11 +1,16 @@
 import Layout from '@/components/layout/Layout'
+import { Text } from '@/components/ui'
 import React from 'react'
-import { Text } from 'react-native'
 
 export default function HomeScreen() {
 	return (
 		<Layout>
-			<Text>Home</Text>
+			<Text
+				size='xl'
+				weight='bold'
+			>
+				Home
+			</Text>
 		</Layout>
 	)
 }

@@ -1,5 +1,6 @@
 import { COLORS } from '@/constants/colors.constant'
 import { DEFAULT_ICON_SIZE } from '@/constants/component.constant'
+import { useTheme } from '@/store/theme.store'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import {
 	Heart,
@@ -16,16 +17,18 @@ import ProfileStack from '../stack/profile/ProfileStack'
 
 const Tab = createBottomTabNavigator<TypeRootStackParamList>()
 
-function renderIcon(Icon: LucideIcon, focused: boolean) {
-	return (
-		<Icon
-			size={DEFAULT_ICON_SIZE}
-			color={focused ? COLORS.blue.normal : COLORS.gray.normal}
-		/>
-	)
-}
-
 export function TabNavigator() {
+	const theme = useTheme()
+
+	function renderIcon(Icon: LucideIcon, focused: boolean) {
+		return (
+			<Icon
+				size={DEFAULT_ICON_SIZE}
+				color={focused ? COLORS.nav.active[theme] : COLORS.nav.inactive[theme]}
+			/>
+		)
+	}
+
 	return (
 		<Tab.Navigator
 			initialRouteName='HomeStack'
@@ -36,7 +39,8 @@ export function TabNavigator() {
 					height: 60,
 					paddingHorizontal: 12,
 					paddingTop: 12,
-					paddingBottom: 12
+					paddingBottom: 12,
+					backgroundColor: COLORS.nav.background[theme]
 				},
 				tabBarLabel: () => null
 			}}
