@@ -1,1 +1,2 @@
 export const DEFAULT_ICON_SIZE = 23
+export const DEFAULT_SCROLL_EVENT_THROTTLE = 64

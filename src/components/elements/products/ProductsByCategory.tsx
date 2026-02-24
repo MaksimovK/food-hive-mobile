@@ -1,0 +1,45 @@
+import Title from '@/components/ui/Title'
+import { IProductsByCategory } from '@/types/home/home.products'
+import React, { useCallback } from 'react'
+import { View } from 'react-native'
+import ProductItem from './ProductItem'
+
+export interface ProductsByCategoryProps {
+	productsByCategory: IProductsByCategory[]
+	categoryRefs: React.MutableRefObject<Record<string, View | null>>
+}
+
+export default function ProductsByCategory({
+	productsByCategory,
+	categoryRefs
+}: ProductsByCategoryProps) {
+	const setCategoryRef = useCallback(
+		(categoryId: string) => (ref: View | null) => {
+			if (!categoryRefs.current) categoryRefs.current = {}
+			categoryRefs.current[categoryId] = ref
+		},
+		[categoryRefs]
+	)
+
+	return productsByCategory.map(category => (
+		<View
+			ref={setCategoryRef(category.categoryId)}
+			className='mb-4'
+			key={category.categoryId}
+		>
+			<Title
+				title={category.categoryName}
+				className='mb-4'
+			/>
+
+			<View className='flex-col gap-2'>
+				{category.products.map(product => (
+					<ProductItem
+						key={product.id}
+						product={product}
+					/>
+				))}
+			</View>
+		</View>
+	))
+}

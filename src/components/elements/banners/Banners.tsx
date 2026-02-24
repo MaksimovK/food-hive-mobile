@@ -1,0 +1,36 @@
+import Scroll from '@/components/ui/Scroll'
+import { IBannerItem } from '@/types/home/home.banner.types'
+import React from 'react'
+import { useWindowDimensions, ViewStyle } from 'react-native'
+import BannerItem from './BannerItem'
+
+export interface BannersProps {
+	banners: IBannerItem[]
+	contentContainerStyle?: ViewStyle
+}
+
+export default function Banners({
+	banners,
+	contentContainerStyle
+}: BannersProps) {
+	const { width } = useWindowDimensions()
+	const bannerWidth = width - 64
+
+	return (
+		<Scroll
+			gap={16}
+			paddingVertical={16}
+			snapToInterval={width - 44}
+			direction='horizontal'
+			contentContainerStyle={contentContainerStyle}
+		>
+			{banners.map(banner => (
+				<BannerItem
+					key={banner.id}
+					banner={banner}
+					style={{ width: bannerWidth }}
+				/>
+			))}
+		</Scroll>
+	)
+}

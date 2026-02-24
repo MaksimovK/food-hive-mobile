@@ -2,7 +2,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import { create, StateCreator } from 'zustand'
 import { createJSONStorage, persist } from 'zustand/middleware'
 
-export type ThemeMode = 'light' | 'dark'
+export type ThemeMode = 'light' | 'dark' | 'system'
 
 interface IInitialState {
 	theme: ThemeMode
@@ -14,7 +14,7 @@ interface IActions {
 	toggleTheme: () => void
 }
 
-type ThemeStateType = IInitialState & IActions
+export type ThemeStateType = IInitialState & IActions
 
 const initialState: IInitialState = {
 	theme: 'light',
@@ -25,9 +25,10 @@ const themeStore: StateCreator<ThemeStateType> = (set, get) => ({
 	...initialState,
 
 	setTheme: theme => {
+		const isDark = theme === 'dark'
 		set({
 			theme,
-			isDark: theme === 'dark'
+			isDark
 		})
 	},
 	toggleTheme: () => {

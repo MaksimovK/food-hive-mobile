@@ -1,17 +1,22 @@
-import { useIsDark } from '@/store/theme.store'
+import { useThemeMode } from '@/hooks/useThemeMode'
 import type { PropsWithChildren } from 'react'
-import { View } from 'react-native'
+import { useEffect } from 'react'
+import { View, useColorScheme } from 'react-native'
 
 export default function ThemeProvider({
 	children
 }: PropsWithChildren<unknown>) {
-	const isDark = useIsDark()
+	const { theme, isDark, setTheme } = useThemeMode()
+	const systemColorScheme = useColorScheme()
+
+	useEffect(() => {
+		if (theme === 'system') {
+			setTheme(systemColorScheme === 'dark' ? 'dark' : 'light')
+		}
+	}, [systemColorScheme, theme])
 
 	return (
-		<View
-			className={isDark ? 'dark' : ''}
-			style={{ flex: 1 }}
-		>
+		<View style={{ flex: 1 }}>
 			{children}
 		</View>
 	)

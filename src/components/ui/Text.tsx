@@ -1,5 +1,6 @@
 import { COLORS } from '@/constants/colors.constant'
-import { useTheme } from '@/store/theme.store'
+import { useThemeMode } from '@/hooks/useThemeMode'
+import { PropsWithChildren } from 'react'
 import { Text as RNText, type TextProps as RNTextProps } from 'react-native'
 
 export interface TextProps extends RNTextProps {
@@ -7,24 +8,27 @@ export interface TextProps extends RNTextProps {
 	size?: 'xs' | 'sm' | 'base' | 'lg' | 'xl' | '2xl'
 	weight?: 'normal' | 'medium' | 'semibold' | 'bold'
 	align?: 'auto' | 'left' | 'center' | 'right' | 'justify'
+	className?: string
 }
 
-export function Text({
+export default function Text({
 	children,
 	variant = 'primary',
 	size = 'base',
 	weight = 'normal',
 	align = 'auto',
+	className,
 	style,
 	...props
-}: TextProps) {
-	const theme = useTheme()
+}: PropsWithChildren<TextProps>) {
+	const { isDark } = useThemeMode()
+	const themeColorKey = isDark ? 'dark' : 'light'
 
 	const variantColors = {
-		primary: COLORS.text.primary[theme],
-		secondary: COLORS.text.secondary[theme],
-		disabled: COLORS.text.disabled[theme]
-	}
+		primary: COLORS.text.primary[themeColorKey],
+		secondary: COLORS.text.secondary[themeColorKey],
+		disabled: COLORS.text.disabled[themeColorKey]
+	} as const
 
 	const fontSizes = {
 		xs: 12,
@@ -33,17 +37,18 @@ export function Text({
 		lg: 18,
 		xl: 20,
 		'2xl': 24
-	}
+	} as const
 
 	const fontWeights = {
-		normal: '400' as const,
-		medium: '500' as const,
-		semibold: '600' as const,
-		bold: '700' as const
-	}
+		normal: '400',
+		medium: '500',
+		semibold: '600',
+		bold: '700'
+	} as const
 
 	return (
 		<RNText
+			className={className}
 			style={[
 				{
 					color: variantColors[variant],
