@@ -1,12 +1,12 @@
-import Text from '@/components/ui/Text'
 import React from 'react'
+import Text from './Text'
 
-export interface TitleProps {
+export interface ITitleProps {
 	title: string
 	className?: string
 }
 
-export default function Title({ title, className }: TitleProps) {
+export default function Title({ title, className }: ITitleProps) {
 	return (
 		<Text
 			size='2xl'

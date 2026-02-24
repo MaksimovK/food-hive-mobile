@@ -1,10 +1,10 @@
-import Title from '@/components/ui/Title'
-import { IProductsByCategory } from '@/types/home/home.products'
+import { Title } from '@/components/ui'
+import { IProductsByCategory } from '@/types'
 import React, { useCallback } from 'react'
 import { View } from 'react-native'
 import ProductItem from './ProductItem'
 
-export interface ProductsByCategoryProps {
+export interface IProductsByCategoryProps {
 	productsByCategory: IProductsByCategory[]
 	categoryRefs: React.MutableRefObject<Record<string, View | null>>
 }
@@ -12,7 +12,7 @@ export interface ProductsByCategoryProps {
 export default function ProductsByCategory({
 	productsByCategory,
 	categoryRefs
-}: ProductsByCategoryProps) {
+}: IProductsByCategoryProps) {
 	const setCategoryRef = useCallback(
 		(categoryId: string) => (ref: View | null) => {
 			if (!categoryRefs.current) categoryRefs.current = {}

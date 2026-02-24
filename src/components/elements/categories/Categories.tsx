@@ -1,14 +1,14 @@
-import Scroll from '@/components/ui/Scroll'
-import { ICategoryItem } from '@/types/home/home.category.types'
+import { Scroll } from '@/components/ui'
+import { ICategoryItem } from '@/types'
 import React from 'react'
 import CategoryItem from './CategoryItem'
 
-export interface CategoriesProps {
+export interface ICategoriesProps {
 	categories: ICategoryItem[]
 	onPress: (categoryId: string) => void
 }
 
-export default function Categories({ categories, onPress }: CategoriesProps) {
+export default function Categories({ categories, onPress }: ICategoriesProps) {
 	return (
 		<Scroll
 			gap={8}

@@ -1,10 +1,10 @@
-import Scroll from '@/components/ui/Scroll'
-import { IBannerItem } from '@/types/home/home.banner.types'
+import { Scroll } from '@/components/ui'
+import { IBannerItem } from '@/types'
 import React from 'react'
 import { useWindowDimensions, ViewStyle } from 'react-native'
 import BannerItem from './BannerItem'
 
-export interface BannersProps {
+export interface IBannersProps {
 	banners: IBannerItem[]
 	contentContainerStyle?: ViewStyle
 }
@@ -12,7 +12,7 @@ export interface BannersProps {
 export default function Banners({
 	banners,
 	contentContainerStyle
-}: BannersProps) {
+}: IBannersProps) {
 	const { width } = useWindowDimensions()
 	const bannerWidth = width - 64
 

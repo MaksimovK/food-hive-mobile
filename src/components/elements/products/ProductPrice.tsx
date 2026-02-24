@@ -1,13 +1,13 @@
-import Text from '@/components/ui/Text'
-import { COLORS } from '@/constants/colors.constant'
-import { useThemeMode } from '@/hooks/useThemeMode'
+import { Text } from '@/components/ui'
+import { COLORS } from '@/constants'
+import { useThemeMode } from '@/hooks'
 import { View } from 'react-native'
 
-export interface ProductPriceProps {
+export interface IProductPriceProps {
 	price: string
 }
 
-export default function ProductPrice({ price }: ProductPriceProps) {
+export default function ProductPrice({ price }: IProductPriceProps) {
 	const { isDark } = useThemeMode()
 	const themeColorKey = isDark ? 'dark' : 'light'
 

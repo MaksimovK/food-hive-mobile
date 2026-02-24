@@ -1,18 +1,25 @@
-import Text from '@/components/ui/Text'
-import { IProduct } from '@/types/product.types'
-import { formatPrice } from '@/utils/formatPrice'
-import { getFullImageUrl } from '@/utils/image.util'
+import { Text } from '@/components/ui'
+import { useTypedNavigation } from '@/hooks'
+import { IProduct } from '@/types'
+import { formatPrice, getFullImageUrl } from '@/utils'
 import React from 'react'
 import { Image, Pressable, PressableProps, View } from 'react-native'
 import ProductPrice from './ProductPrice'
 
-export interface ProductItemProps extends Omit<PressableProps, 'onPress'> {
+export interface IProductItemProps extends Omit<PressableProps, 'onPress'> {
 	product: IProduct
 }
 
-export default function ProductItem({ product, ...props }: ProductItemProps) {
+export default function ProductItem({ product, ...props }: IProductItemProps) {
+	const { navigate } = useTypedNavigation()
+
+	const handlePress = () => {
+		navigate('ProductInfo', { productId: product.id })
+	}
+
 	return (
 		<Pressable
+			onPress={handlePress}
 			className='flex-row items-center rounded-2xl overflow-hidden'
 			{...props}
 		>

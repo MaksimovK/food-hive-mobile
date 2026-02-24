@@ -6,6 +6,7 @@ export type TypeTabStackParamList = {
 	FavoriteScreen: undefined
 	CartScreen: undefined
 	ProfileScreen: undefined
+	ProductInfo: { productId: string }
 }
 
 export interface IRoute {

@@ -1,14 +1,14 @@
-import Text from '@/components/ui/Text'
-import { IBannerItem } from '@/types/home/home.banner.types'
-import { getFullImageUrl } from '@/utils/image.util'
+import { Text } from '@/components/ui'
+import { IBannerItem } from '@/types'
+import { getFullImageUrl } from '@/utils'
 import React from 'react'
 import { ImageBackground, type ImageBackgroundProps } from 'react-native'
 
-export interface BannerItemProps extends Omit<ImageBackgroundProps, 'source'> {
+export interface IBannerItemProps extends Omit<ImageBackgroundProps, 'source'> {
 	banner: IBannerItem
 }
 
-export default function BannerItem({ banner, ...props }: BannerItemProps) {
+export default function BannerItem({ banner, ...props }: IBannerItemProps) {
 	return (
 		<ImageBackground
 			{...props}

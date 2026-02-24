@@ -1,5 +1,5 @@
-import { COLORS } from '@/constants/colors.constant'
-import { useThemeMode } from '@/hooks/useThemeMode'
+import { COLORS } from '@/constants'
+import { useThemeMode } from '@/hooks'
 import React from 'react'
 import { ActivityIndicator } from 'react-native'
 

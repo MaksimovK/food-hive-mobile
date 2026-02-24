@@ -1,8 +1,8 @@
-import { DEFAULT_SCROLL_EVENT_THROTTLE } from '@/constants/component.constant'
+import { DEFAULT_SCROLL_EVENT_THROTTLE } from '@/constants'
 import React, { forwardRef } from 'react'
 import { ScrollView, ScrollViewProps, ViewStyle } from 'react-native'
 
-export interface ScrollProps extends ScrollViewProps {
+export interface IScrollProps extends ScrollViewProps {
 	children: React.ReactNode
 	contentContainerStyle?: ViewStyle
 	gap?: number
@@ -11,7 +11,7 @@ export interface ScrollProps extends ScrollViewProps {
 	direction?: 'horizontal' | 'vertical'
 }
 
-const Scroll = forwardRef<ScrollView, ScrollProps>(function Scroll(
+const Scroll = forwardRef<ScrollView, IScrollProps>(function Scroll(
 	{
 		children,
 		direction = 'vertical',

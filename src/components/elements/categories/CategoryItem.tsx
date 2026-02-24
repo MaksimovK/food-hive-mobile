@@ -4,7 +4,7 @@ import { getFullImageUrl } from '@/utils/image.util'
 import React from 'react'
 import { Image, Pressable, PressableProps, View } from 'react-native'
 
-export interface CategoryItemProps extends Omit<PressableProps, 'onPress'> {
+export interface ICategoryItemProps extends Omit<PressableProps, 'onPress'> {
 	category: ICategoryItem
 	onPress: (categoryId: string) => void
 }
@@ -13,7 +13,7 @@ export default function CategoryItem({
 	category,
 	onPress,
 	...props
-}: CategoryItemProps) {
+}: ICategoryItemProps) {
 	return (
 		<Pressable
 			{...props}

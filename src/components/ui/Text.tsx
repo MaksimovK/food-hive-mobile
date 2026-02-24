@@ -1,9 +1,9 @@
-import { COLORS } from '@/constants/colors.constant'
-import { useThemeMode } from '@/hooks/useThemeMode'
+import { COLORS } from '@/constants'
+import { useThemeMode } from '@/hooks'
 import { PropsWithChildren } from 'react'
 import { Text as RNText, type TextProps as RNTextProps } from 'react-native'
 
-export interface TextProps extends RNTextProps {
+export interface ITextProps extends RNTextProps {
 	variant?: 'primary' | 'secondary' | 'disabled'
 	size?: 'xs' | 'sm' | 'base' | 'lg' | 'xl' | '2xl'
 	weight?: 'normal' | 'medium' | 'semibold' | 'bold'
@@ -20,7 +20,7 @@ export default function Text({
 	className,
 	style,
 	...props
-}: PropsWithChildren<TextProps>) {
+}: PropsWithChildren<ITextProps>) {
 	const { isDark } = useThemeMode()
 	const themeColorKey = isDark ? 'dark' : 'light'
 

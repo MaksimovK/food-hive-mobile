@@ -1,5 +1,5 @@
 import { axiosClassic } from '@/api/interceptor'
-import { IHomeResponse } from '@/types/home/home.types'
+import { IHomeResponse } from '@/types'
 
 class HomeService {
 	private BASE_URL = '/home'

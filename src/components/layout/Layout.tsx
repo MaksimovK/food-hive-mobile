@@ -1,18 +1,18 @@
-import { COLORS } from '@/constants/colors.constant'
-import { useThemeMode } from '@/hooks/useThemeMode'
+import { COLORS } from '@/constants'
+import { useThemeMode } from '@/hooks'
 import cn from 'clsx'
 import { type PropsWithChildren } from 'react'
 import { StatusBar, View } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
-interface ILayout {
+interface ILayoutProps {
 	className?: string
 }
 
 export default function Layout({
 	children,
 	className
-}: PropsWithChildren<ILayout>) {
+}: PropsWithChildren<ILayoutProps>) {
 	const { top } = useSafeAreaInsets()
 	const { isDark } = useThemeMode()
 	const themeColorKey = isDark ? 'dark' : 'light'
