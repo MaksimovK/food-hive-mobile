@@ -4,8 +4,7 @@ import React from 'react'
 import { ActivityIndicator } from 'react-native'
 
 export default function Loader() {
-	const { isDark } = useThemeMode()
-	const themeColorKey = isDark ? 'dark' : 'light'
+	const { themeColorKey } = useThemeMode()
 
 	return (
 		<ActivityIndicator

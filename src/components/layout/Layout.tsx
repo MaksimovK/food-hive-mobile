@@ -14,8 +14,7 @@ export default function Layout({
 	className
 }: PropsWithChildren<ILayoutProps>) {
 	const { top } = useSafeAreaInsets()
-	const { isDark } = useThemeMode()
-	const themeColorKey = isDark ? 'dark' : 'light'
+	const { isDark, themeColorKey } = useThemeMode()
 
 	return (
 		<View

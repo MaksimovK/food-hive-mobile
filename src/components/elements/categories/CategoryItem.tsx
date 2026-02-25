@@ -1,8 +1,9 @@
+import { Button } from '@/components/ui'
 import Text from '@/components/ui/Text'
 import { ICategoryItem } from '@/types/home/home.category.types'
 import { getFullImageUrl } from '@/utils/image.util'
 import React from 'react'
-import { Image, Pressable, PressableProps, View } from 'react-native'
+import { Image, PressableProps, View } from 'react-native'
 
 export interface ICategoryItemProps extends Omit<PressableProps, 'onPress'> {
 	category: ICategoryItem
@@ -15,7 +16,7 @@ export default function CategoryItem({
 	...props
 }: ICategoryItemProps) {
 	return (
-		<Pressable
+		<Button
 			{...props}
 			onPress={() => onPress(category.id)}
 			className='items-center'
@@ -39,6 +40,6 @@ export default function CategoryItem({
 			>
 				{category.name}
 			</Text>
-		</Pressable>
+		</Button>
 	)
 }

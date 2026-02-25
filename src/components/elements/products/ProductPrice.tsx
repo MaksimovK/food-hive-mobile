@@ -8,8 +8,7 @@ export interface IProductPriceProps {
 }
 
 export default function ProductPrice({ price }: IProductPriceProps) {
-	const { isDark } = useThemeMode()
-	const themeColorKey = isDark ? 'dark' : 'light'
+	const { themeColorKey } = useThemeMode()
 
 	return (
 		<View

@@ -1,21 +1,27 @@
-import { COLORS } from '@/constants'
-import { useThemeMode } from '@/hooks'
+import { BackButton, FavoriteButton } from '@/components/ui'
+import { useIsFavorite, useToggleFavorite } from '@/store'
+import { IProduct } from '@/types'
 import { getFullImageUrl } from '@/utils'
-import { ArrowLeft } from 'lucide-react-native'
-import React from 'react'
-import { Image, Pressable, View } from 'react-native'
+import React, { useCallback } from 'react'
+import { Image, View } from 'react-native'
 
 export interface IProductImageProps {
+	product: IProduct
 	imageUrl: string
 	onGoBack: () => void
 }
 
 export default function ProductImage({
+	product,
 	imageUrl,
 	onGoBack
 }: IProductImageProps) {
-	const { isDark } = useThemeMode()
-	const themeColorKey = isDark ? 'dark' : 'light'
+	const toggleFavorite = useToggleFavorite()
+	const isFav = useIsFavorite(product.id)
+
+	const handleToggleFavorite = useCallback(() => {
+		toggleFavorite(product)
+	}, [toggleFavorite, product])
 
 	return (
 		<View className='relative'>
@@ -27,18 +33,16 @@ export default function ProductImage({
 				/>
 			</View>
 
-			<Pressable
+			<BackButton
+				className='absolute top-4 left-4'
 				onPress={onGoBack}
-				style={{
-					backgroundColor: COLORS.surfaceElevated[themeColorKey]
-				}}
-				className='absolute top-4 left-4 p-2 rounded-full'
-			>
-				<ArrowLeft
-					size={24}
-					color={COLORS.text.primary[themeColorKey]}
-				/>
-			</Pressable>
+			/>
+
+			<FavoriteButton
+				className='w-12 h-12 absolute top-4 right-4'
+				isFavorite={isFav}
+				onPress={handleToggleFavorite}
+			/>
 		</View>
 	)
 }

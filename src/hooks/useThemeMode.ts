@@ -6,16 +6,22 @@ import {
 	useToggleTheme
 } from '@/store/theme.store'
 
-export function useThemeMode(): ThemeStateType {
+export interface UseThemeModeReturn extends ThemeStateType {
+	themeColorKey: 'dark' | 'light'
+}
+
+export function useThemeMode(): UseThemeModeReturn {
 	const theme = useTheme()
 	const isDark = useIsDark()
 	const toggleTheme = useToggleTheme()
 	const setTheme = useSetTheme()
+	const themeColorKey = isDark ? 'dark' : 'light'
 
 	return {
 		theme,
 		isDark,
 		toggleTheme,
-		setTheme
+		setTheme,
+		themeColorKey
 	}
 }

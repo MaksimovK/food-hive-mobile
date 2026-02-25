@@ -8,6 +8,7 @@ import {
 import Layout from '@/components/layout/Layout'
 import { Loader, Scroll } from '@/components/ui'
 import { useFetchProduct, useTypedNavigation, useTypedRoute } from '@/hooks'
+import { useCallback } from 'react'
 
 export default function ProductInfoScreen() {
 	const navigation = useTypedNavigation()
@@ -16,7 +17,7 @@ export default function ProductInfoScreen() {
 
 	const { data: product, isLoading } = useFetchProduct(productId)
 
-	const handleGoBack = () => navigation.goBack()
+	const handleGoBack = useCallback(() => navigation.goBack(), [navigation])
 
 	if (isLoading) return <Loader />
 
@@ -26,6 +27,7 @@ export default function ProductInfoScreen() {
 		<Layout>
 			<Scroll>
 				<ProductImage
+					product={product}
 					imageUrl={product.image}
 					onGoBack={handleGoBack}
 				/>

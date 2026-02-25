@@ -21,8 +21,7 @@ export default function Text({
 	style,
 	...props
 }: PropsWithChildren<ITextProps>) {
-	const { isDark } = useThemeMode()
-	const themeColorKey = isDark ? 'dark' : 'light'
+	const { themeColorKey } = useThemeMode()
 
 	const variantColors = {
 		primary: COLORS.text.primary[themeColorKey],

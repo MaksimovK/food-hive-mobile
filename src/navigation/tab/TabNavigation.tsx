@@ -1,6 +1,6 @@
 import { COLORS } from '@/constants/colors.constant'
 import { DEFAULT_ICON_SIZE } from '@/constants/component.constant'
-import { useIsDark } from '@/store/theme.store'
+import { useThemeMode } from '@/hooks'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import {
 	Heart,
@@ -18,8 +18,7 @@ import ProfileStack from '../stack/profile/ProfileStack'
 const Tab = createBottomTabNavigator<TypeRootStackParamList>()
 
 export function TabNavigator() {
-	const isDark = useIsDark()
-	const themeColorKey = isDark ? 'dark' : 'light'
+	const { themeColorKey } = useThemeMode()
 
 	function renderIcon(Icon: LucideIcon, focused: boolean) {
 		return (

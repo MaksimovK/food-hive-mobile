@@ -23,8 +23,7 @@ export default function ProductNutrition({
 	weight,
 	unit
 }: IProductNutritionProps) {
-	const { isDark } = useThemeMode()
-	const themeColorKey = isDark ? 'dark' : 'light'
+	const { themeColorKey } = useThemeMode()
 
 	const nutritionData = [
 		{ label: EnumUnitLabels[unit], value: weight },

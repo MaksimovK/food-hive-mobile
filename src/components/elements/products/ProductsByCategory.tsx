@@ -32,7 +32,7 @@ export default function ProductsByCategory({
 				className='mb-4'
 			/>
 
-			<View className='flex-col gap-2'>
+			<View className='flex-col gap-2 px-1.5'>
 				{category.products.map(product => (
 					<ProductItem
 						key={product.id}

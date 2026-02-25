@@ -1,9 +1,10 @@
-import { Text } from '@/components/ui'
+import { Button, FavoriteButton, Text } from '@/components/ui'
 import { useTypedNavigation } from '@/hooks'
+import { useIsFavorite, useToggleFavorite } from '@/store'
 import { IProduct } from '@/types'
 import { formatPrice, getFullImageUrl } from '@/utils'
-import React from 'react'
-import { Image, Pressable, PressableProps, View } from 'react-native'
+import React, { useCallback } from 'react'
+import { Image, PressableProps, View } from 'react-native'
 import ProductPrice from './ProductPrice'
 
 export interface IProductItemProps extends Omit<PressableProps, 'onPress'> {
@@ -12,13 +13,19 @@ export interface IProductItemProps extends Omit<PressableProps, 'onPress'> {
 
 export default function ProductItem({ product, ...props }: IProductItemProps) {
 	const { navigate } = useTypedNavigation()
+	const toggleFavorite = useToggleFavorite()
+	const isFav = useIsFavorite(product.id)
 
-	const handlePress = () => {
+	const handlePress = useCallback(() => {
 		navigate('ProductInfo', { productId: product.id })
-	}
+	}, [navigate, product.id])
+
+	const handleToggleFavorite = useCallback(() => {
+		toggleFavorite(product)
+	}, [toggleFavorite, product])
 
 	return (
-		<Pressable
+		<Button
 			onPress={handlePress}
 			className='flex-row items-center rounded-2xl overflow-hidden'
 			{...props}
@@ -43,6 +50,12 @@ export default function ProductItem({ product, ...props }: IProductItemProps) {
 
 				<ProductPrice price={formatPrice(product.price)} />
 			</View>
-		</Pressable>
+
+			<FavoriteButton
+				className='absolute top-2 right-2'
+				isFavorite={isFav}
+				onPress={handleToggleFavorite}
+			/>
+		</Button>
 	)
 }

@@ -1,5 +1,6 @@
 export { default as Banners } from './banners/Banners'
 export { default as Categories } from './categories/Categories'
+export { default as FavoriteProductCard } from './favorite/FavoriteProductCard'
 export { default as ProductAllergens } from './product-info/ProductAllergens'
 export { default as ProductDescription } from './product-info/ProductDescription'
 export { default as ProductImage } from './product-info/ProductImage'

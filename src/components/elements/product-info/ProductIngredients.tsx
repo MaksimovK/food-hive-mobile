@@ -12,8 +12,7 @@ export interface IProductIngredientsProps {
 export default function ProductIngredients({
 	ingredients
 }: IProductIngredientsProps) {
-	const { isDark } = useThemeMode()
-	const themeColorKey = isDark ? 'dark' : 'light'
+	const { themeColorKey } = useThemeMode()
 
 	return (
 		<View className='mb-4'>
