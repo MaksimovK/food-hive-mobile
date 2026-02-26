@@ -16,7 +16,6 @@ export interface IProduct {
 	description: string | null
 	image: string
 	price: number
-	weight: number
 	unit: EnumUnit
 	caloriesPer100g: number
 	proteinPer100g: number

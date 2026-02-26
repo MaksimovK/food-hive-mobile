@@ -5,6 +5,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import {
 	Heart,
 	Home,
+	Search,
 	ShoppingCart,
 	User,
 	type LucideIcon
@@ -14,6 +15,7 @@ import CartStack from '../stack/cart/CartStack'
 import FavoriteStack from '../stack/favorite/FavoriteStack'
 import HomeStack from '../stack/home/HomeStack'
 import ProfileStack from '../stack/profile/ProfileStack'
+import SearchStack from '../stack/search/SearchStack'
 
 const Tab = createBottomTabNavigator<TypeRootStackParamList>()
 
@@ -53,15 +55,20 @@ export function TabNavigator() {
 				name='HomeStack'
 				component={HomeStack}
 				options={{
-					title: 'Главная',
 					tabBarIcon: ({ focused }) => renderIcon(Home, focused)
+				}}
+			/>
+			<Tab.Screen
+				name='SearchStack'
+				component={SearchStack}
+				options={{
+					tabBarIcon: ({ focused }) => renderIcon(Search, focused)
 				}}
 			/>
 			<Tab.Screen
 				name='FavoriteStack'
 				component={FavoriteStack}
 				options={{
-					title: 'Избранное',
 					tabBarIcon: ({ focused }) => renderIcon(Heart, focused)
 				}}
 			/>
@@ -69,7 +76,6 @@ export function TabNavigator() {
 				name='CartStack'
 				component={CartStack}
 				options={{
-					title: 'Корзина',
 					tabBarIcon: ({ focused }) => renderIcon(ShoppingCart, focused)
 				}}
 			/>
@@ -77,7 +83,6 @@ export function TabNavigator() {
 				name='ProfileStack'
 				component={ProfileStack}
 				options={{
-					title: 'Профиль',
 					tabBarIcon: ({ focused }) => renderIcon(User, focused)
 				}}
 			/>

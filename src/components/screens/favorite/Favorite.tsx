@@ -37,10 +37,6 @@ export default function FavoriteScreen() {
 				keyExtractor={item => item.id}
 				renderItem={renderItem}
 				numColumns={2}
-				columnWrapperStyle={{
-					marginBottom: 12,
-					gap: 6
-				}}
 				ListHeaderComponent={
 					<View className='flex-row justify-end my-4'>
 						<IconButton

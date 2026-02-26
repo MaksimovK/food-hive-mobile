@@ -11,7 +11,7 @@ export interface IProductNutritionProps {
 	proteinPer100g: number
 	fatPer100g: number
 	carbsPer100g: number
-	weight: number
+	servingSize: number
 	unit: EnumUnit
 }
 
@@ -20,13 +20,13 @@ export default function ProductNutrition({
 	proteinPer100g,
 	fatPer100g,
 	carbsPer100g,
-	weight,
+	servingSize,
 	unit
 }: IProductNutritionProps) {
 	const { themeColorKey } = useThemeMode()
 
 	const nutritionData = [
-		{ label: EnumUnitLabels[unit], value: weight },
+		{ label: EnumUnitLabels[unit], value: servingSize },
 		{ label: 'Ккал', value: caloriesPer100g },
 		{ label: 'Белки', value: proteinPer100g },
 		{ label: 'Жиры', value: fatPer100g },

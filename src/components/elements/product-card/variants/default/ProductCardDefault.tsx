@@ -45,6 +45,8 @@ export default function ProductCardDefault({
 				<Text
 					size='lg'
 					weight='bold'
+					numberOfLines={1}
+					ellipsizeMode='tail'
 				>
 					{product.name}
 				</Text>
@@ -52,6 +54,7 @@ export default function ProductCardDefault({
 				<Text
 					size='lg'
 					weight='bold'
+					className='py-2'
 				>
 					{formatPrice(product.price)}
 				</Text>

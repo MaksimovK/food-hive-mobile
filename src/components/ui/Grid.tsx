@@ -32,6 +32,10 @@ const Grid = forwardRef<FlatList, IGridProps<any>>(
 				className={className}
 				showsVerticalScrollIndicator={showsVerticalScrollIndicator}
 				showsHorizontalScrollIndicator={showsHorizontalScrollIndicator}
+				columnWrapperStyle={{
+					marginBottom: 12,
+					gap: 12
+				}}
 				renderItem={item => {
 					const Component = renderItem(item)
 					return (

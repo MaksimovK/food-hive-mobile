@@ -1,4 +1,4 @@
-import { homeService } from '@/services/home.service'
+import { homeService } from '@/services'
 import { useQuery } from '@tanstack/react-query'
 
 export function useFetchHome() {

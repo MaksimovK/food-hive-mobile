@@ -1,0 +1,26 @@
+import ProductInfo from '@/components/screens/product-info/ProductInfo'
+import Search from '@/components/screens/search/Search'
+import { createNativeStackNavigator } from '@react-navigation/native-stack'
+import React from 'react'
+
+export type SearchStackParamList = {
+	Search: undefined
+	ProductInfo: { productId: string }
+}
+
+const Stack = createNativeStackNavigator<SearchStackParamList>()
+
+export default function SearchStack() {
+	return (
+		<Stack.Navigator screenOptions={{ headerShown: false }}>
+			<Stack.Screen
+				name='Search'
+				component={Search}
+			/>
+			<Stack.Screen
+				name='ProductInfo'
+				component={ProductInfo}
+			/>
+		</Stack.Navigator>
+	)
+}

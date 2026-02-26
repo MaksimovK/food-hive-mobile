@@ -17,6 +17,7 @@ export interface IRoute {
 
 export type TypeRootStackParamList = {
 	HomeStack: undefined
+	SearchStack: undefined
 	FavoriteStack: undefined
 	CartStack: undefined
 	ProfileStack: undefined

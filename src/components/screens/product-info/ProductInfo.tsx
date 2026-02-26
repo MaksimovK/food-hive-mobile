@@ -42,7 +42,7 @@ export default function ProductInfoScreen() {
 					proteinPer100g={product.proteinPer100g}
 					fatPer100g={product.fatPer100g}
 					carbsPer100g={product.carbsPer100g}
-					weight={product.weight}
+					servingSize={product.servingSize}
 					unit={product.unit}
 				/>
 
