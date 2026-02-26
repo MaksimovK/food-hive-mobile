@@ -1,8 +1,7 @@
 import { BackButton, FavoriteButton } from '@/components/ui'
-import { useIsFavorite, useToggleFavorite } from '@/store'
 import { IProduct } from '@/types'
 import { getFullImageUrl } from '@/utils'
-import React, { useCallback } from 'react'
+import React from 'react'
 import { Image, View } from 'react-native'
 
 export interface IProductImageProps {
@@ -16,13 +15,6 @@ export default function ProductImage({
 	imageUrl,
 	onGoBack
 }: IProductImageProps) {
-	const toggleFavorite = useToggleFavorite()
-	const isFav = useIsFavorite(product.id)
-
-	const handleToggleFavorite = useCallback(() => {
-		toggleFavorite(product)
-	}, [toggleFavorite, product])
-
 	return (
 		<View className='relative'>
 			<View className='w-full h-80'>
@@ -39,9 +31,8 @@ export default function ProductImage({
 			/>
 
 			<FavoriteButton
-				className='w-12 h-12 absolute top-4 right-4'
-				isFavorite={isFav}
-				onPress={handleToggleFavorite}
+				className='w-[36px] h-[36px] absolute top-4 right-4'
+				product={product}
 			/>
 		</View>
 	)

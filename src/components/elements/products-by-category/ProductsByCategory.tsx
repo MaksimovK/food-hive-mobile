@@ -1,8 +1,8 @@
+import { ProductCard } from '@/components/elements'
 import { Title } from '@/components/ui'
 import { IProductsByCategory } from '@/types'
 import React, { useCallback } from 'react'
 import { View } from 'react-native'
-import ProductItem from './ProductItem'
 
 export interface IProductsByCategoryProps {
 	productsByCategory: IProductsByCategory[]
@@ -34,8 +34,9 @@ export default function ProductsByCategory({
 
 			<View className='flex-col gap-2 px-1.5'>
 				{category.products.map(product => (
-					<ProductItem
+					<ProductCard
 						key={product.id}
+						variant='horizontal'
 						product={product}
 					/>
 				))}

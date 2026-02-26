@@ -22,7 +22,7 @@ export default function BackButton({
 	return (
 		<IconButton
 			{...props}
-			className={cn(`w-12 h-12`, className)}
+			className={cn(`w-[36px] h-[36px]`, className)}
 			style={{
 				backgroundColor:
 					backgroundColor || COLORS.surfaceElevated[themeColorKey],

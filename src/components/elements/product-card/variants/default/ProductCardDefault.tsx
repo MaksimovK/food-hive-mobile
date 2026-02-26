@@ -1,37 +1,27 @@
 import { AddToCartButton, Button, FavoriteButton, Text } from '@/components/ui'
 import { COLORS } from '@/constants'
-import { useThemeMode, useTypedNavigation } from '@/hooks'
-import { IProduct } from '@/types'
+import { useThemeMode } from '@/hooks'
 import { formatPrice, getFullImageUrl } from '@/utils'
-import React, { useCallback } from 'react'
+import cn from 'clsx'
+import React from 'react'
 import { Image, View } from 'react-native'
+import { IProductCardProps } from '../product-card.interface'
 
-export interface IFavoriteProductCardProps {
-	product: IProduct
-	onToggleFavorite: () => void
-	isFavorite: boolean
+export interface IProductCardVariantProps {
+	props: IProductCardProps
+	className?: string
 }
 
-export default function FavoriteProductCard({
-	product,
-	onToggleFavorite,
-	isFavorite
-}: IFavoriteProductCardProps) {
-	const { navigate } = useTypedNavigation()
+export default function ProductCardDefault({
+	props: { product, onCardPress },
+	className
+}: IProductCardVariantProps) {
 	const { themeColorKey } = useThemeMode()
-
-	const handlePress = useCallback(() => {
-		navigate('ProductInfo', { productId: product.id })
-	}, [navigate, product.id])
-
-	const handleAddToCart = useCallback(() => {
-		console.log('Добавить в корзину:', product.name)
-	}, [product.name])
 
 	return (
 		<Button
-			onPress={handlePress}
-			className='rounded-2xl overflow-hidden mr-2'
+			onPress={onCardPress}
+			className={cn(`rounded-2xl overflow-hidden`, className)}
 			style={{
 				backgroundColor: COLORS.surface[themeColorKey],
 				borderColor: COLORS.border[themeColorKey],
@@ -47,8 +37,7 @@ export default function FavoriteProductCard({
 
 				<FavoriteButton
 					className='w-[32px] h-[32px] absolute top-2 right-2'
-					isFavorite={isFavorite}
-					onPress={onToggleFavorite}
+					product={product}
 				/>
 			</View>
 
@@ -67,7 +56,7 @@ export default function FavoriteProductCard({
 					{formatPrice(product.price)}
 				</Text>
 
-				<AddToCartButton onPress={handleAddToCart} />
+				<AddToCartButton onPress={() => console.log('cart')} />
 			</View>
 		</Button>
 	)

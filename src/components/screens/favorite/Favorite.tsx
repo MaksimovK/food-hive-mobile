@@ -1,7 +1,7 @@
-import { FavoriteProductCard } from '@/components/elements'
+import { ProductCard } from '@/components/elements'
 import Layout from '@/components/layout/Layout'
 import { Grid, IconButton, Text } from '@/components/ui'
-import { useClearFavorites, useFavorites, useToggleFavorite } from '@/store'
+import { useClearFavorites, useFavorites } from '@/store'
 import { IProduct } from '@/types'
 import { Trash2 } from 'lucide-react-native'
 import React, { useCallback } from 'react'
@@ -9,25 +9,11 @@ import { View } from 'react-native'
 
 export default function FavoriteScreen() {
 	const favorites = useFavorites()
-	const toggleFavorite = useToggleFavorite()
 	const clearFavorites = useClearFavorites()
 
-	const handleToggleFavorite = useCallback(
-		(product: IProduct) => {
-			toggleFavorite(product)
-		},
-		[toggleFavorite]
-	)
-
 	const renderItem = useCallback(
-		({ item }: { item: IProduct }) => (
-			<FavoriteProductCard
-				product={item}
-				isFavorite={true}
-				onToggleFavorite={() => handleToggleFavorite(item)}
-			/>
-		),
-		[handleToggleFavorite]
+		({ item }: { item: IProduct }) => <ProductCard product={item} />,
+		[]
 	)
 
 	if (favorites.length === 0) {
