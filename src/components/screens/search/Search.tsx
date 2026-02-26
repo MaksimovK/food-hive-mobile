@@ -67,7 +67,7 @@ export default function SearchScreen() {
 
 	return (
 		<Layout>
-			<View className='my-2'>
+			<View className='my-4'>
 				<SearchInput
 					value={searchQuery}
 					onChangeText={setSearchQuery}

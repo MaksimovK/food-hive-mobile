@@ -1,5 +1,5 @@
 import { axiosClassic } from '@/api/interceptor'
-import { IProductDetails } from '@/types'
+import { IProduct, IProductDetails } from '@/types'
 
 class ProductService {
 	private BASE_URL = '/products'
@@ -7,6 +7,13 @@ class ProductService {
 	async getProductById(id: string) {
 		const response = await axiosClassic.get<IProductDetails>(
 			`${this.BASE_URL}/${id}`
+		)
+		return response.data
+	}
+
+	async searchProducts(query: string) {
+		const response = await axiosClassic.get<IProduct[]>(
+			`${this.BASE_URL}/search?q=${query}`
 		)
 		return response.data
 	}

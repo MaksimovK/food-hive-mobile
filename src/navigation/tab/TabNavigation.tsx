@@ -10,14 +10,14 @@ import {
 	User,
 	type LucideIcon
 } from 'lucide-react-native'
-import { TypeRootStackParamList } from '../navigation.types'
+import { TypeTabParamList } from '../navigation.types'
 import CartStack from '../stack/cart/CartStack'
 import FavoriteStack from '../stack/favorite/FavoriteStack'
 import HomeStack from '../stack/home/HomeStack'
 import ProfileStack from '../stack/profile/ProfileStack'
 import SearchStack from '../stack/search/SearchStack'
 
-const Tab = createBottomTabNavigator<TypeRootStackParamList>()
+const Tab = createBottomTabNavigator<TypeTabParamList>()
 
 export function TabNavigator() {
 	const { themeColorKey } = useThemeMode()
