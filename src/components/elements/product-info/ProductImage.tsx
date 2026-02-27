@@ -7,13 +7,11 @@ import { Image, View } from 'react-native'
 export interface IProductImageProps {
 	product: IProduct
 	imageUrl: string
-	onGoBack: () => void
 }
 
 export default function ProductImage({
 	product,
-	imageUrl,
-	onGoBack
+	imageUrl
 }: IProductImageProps) {
 	return (
 		<View className='relative'>
@@ -25,10 +23,7 @@ export default function ProductImage({
 				/>
 			</View>
 
-			<BackButton
-				className='absolute top-4 left-4'
-				onPress={onGoBack}
-			/>
+			<BackButton className='absolute top-4 left-4' />
 
 			<FavoriteButton
 				className='w-[36px] h-[36px] absolute top-4 right-4'

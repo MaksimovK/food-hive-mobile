@@ -1,25 +1,28 @@
 import { IconButton } from '@/components/ui'
 import { COLORS } from '@/constants'
-import { useThemeMode, useTypedNavigation } from '@/hooks'
+import { useThemeMode } from '@/hooks'
 import cn from 'clsx'
-import { ArrowLeft } from 'lucide-react-native'
-import React, { useCallback } from 'react'
+import { Moon, Sun } from 'lucide-react-native'
+import React from 'react'
 import { IIconButtonProps } from '../icon-button.interface'
 
-export interface IBackButtonProps extends IIconButtonProps {
+export interface IThemeButtonProps extends IIconButtonProps {
 	backgroundColor?: string
 }
 
-export default function BackButton({
-	icon = ArrowLeft,
+export default function ThemeButton({
+	icon,
 	backgroundColor,
-	onPress,
 	className,
 	...props
-}: IBackButtonProps) {
-	const navigation = useTypedNavigation()
-	const { themeColorKey } = useThemeMode()
-	const handleGoBack = useCallback(() => navigation.goBack(), [navigation])
+}: IThemeButtonProps) {
+	const { themeColorKey, toggleTheme } = useThemeMode()
+
+	if (themeColorKey === 'light') {
+		icon = Sun
+	} else {
+		icon = Moon
+	}
 
 	return (
 		<IconButton
@@ -32,7 +35,7 @@ export default function BackButton({
 			}}
 			icon={icon}
 			iconColor={COLORS.text.primary[themeColorKey]}
-			onPress={onPress || handleGoBack}
+			onPress={toggleTheme}
 		/>
 	)
 }
