@@ -1,3 +1,4 @@
+export { default as AuthToggle } from './auth/AuthToggle'
 export { default as Banners } from './banners/Banners'
 export { default as Categories } from './categories/Categories'
 export { default as ProductCard } from './product-card/ProductCard'

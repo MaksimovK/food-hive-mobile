@@ -1,7 +1,11 @@
 export { useTypedNavigation } from './navigation/useTypedNavigation'
 export { useTypedRoute } from './navigation/useTypedRoute'
+export {
+	useLogin,
+	useLogoutMutation,
+	useRegister
+} from './queries/auth.queries'
 export { useFetchHome } from './queries/home.queries'
-export { useFetchProduct } from './queries/product.queries'
-export { useSearchProducts } from './queries/product.queries'
-export { useThemeMode } from './useThemeMode'
+export { useFetchProduct, useSearchProducts } from './queries/product.queries'
 export { useDebounce } from './useDebounce'
+export { useThemeMode } from './useThemeMode'

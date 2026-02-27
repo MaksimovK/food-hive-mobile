@@ -11,6 +11,7 @@ module.exports = {
 				}
 			}
 		],
-		['inline-dotenv']
+		['inline-dotenv'],
+		'@babel/plugin-transform-export-namespace-from'
 	]
 }

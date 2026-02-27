@@ -1,17 +1,17 @@
 import React from 'react'
-import Text from './Text'
+import Text, { ITextProps } from './Text'
 
-export interface ITitleProps {
+export interface ITitleProps extends ITextProps {
 	title: string
 	className?: string
 }
 
-export default function Title({ title, className }: ITitleProps) {
+export default function Title({ title, className, ...props }: ITitleProps) {
 	return (
 		<Text
+			{...props}
 			size='2xl'
 			weight='bold'
-			align='left'
 			className={className}
 		>
 			{title}

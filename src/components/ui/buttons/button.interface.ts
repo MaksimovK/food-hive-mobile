@@ -1,10 +1,12 @@
+import { ReactNode } from 'react'
 import { ActivityIndicatorProps, PressableProps } from 'react-native'
 
-export interface IButtonProps extends PressableProps {
+export type ButtonStateType = 'default' | 'disable'
+
+export interface IButtonProps extends Omit<PressableProps, 'children'> {
 	isLoading?: boolean
 	loaderProps?: ActivityIndicatorProps
 	state?: ButtonStateType
 	className?: string
+	children?: ReactNode
 }
-
-export type ButtonStateType = 'default' | 'disable'

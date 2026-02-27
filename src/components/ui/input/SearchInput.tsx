@@ -27,11 +27,13 @@ export default function SearchInput({
 
 	return (
 		<View
-			className={cn(`flex-row items-center px-2 py-1 rounded-2xl`, className)}
+			className={cn(
+				`flex-row items-center px-2 py-1 rounded-2xl border`,
+				className
+			)}
 			style={{
 				backgroundColor: COLORS.search.background[themeColorKey],
-				borderColor: COLORS.border[themeColorKey],
-				borderWidth: 1
+				borderColor: COLORS.border[themeColorKey]
 			}}
 		>
 			<TextInput

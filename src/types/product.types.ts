@@ -1,3 +1,5 @@
+import { IBase } from './root.types'
+
 const EnumUnit = {
 	G: 'г',
 	ML: 'мл'
@@ -10,8 +12,7 @@ export const EnumUnitLabels: Record<EnumUnit, string> = {
 	[EnumUnit.ML]: 'мл'
 }
 
-export interface IProduct {
-	id: string
+export interface IProduct extends IBase {
 	name: string
 	description: string | null
 	image: string
@@ -26,14 +27,12 @@ export interface IProduct {
 	categoryId: string
 }
 
-export interface ICategory {
-	id: string
+export interface ICategory extends IBase {
 	name: string
 	image: string | null
 }
 
-export interface IIngredient {
-	id: string
+export interface IIngredient extends IBase {
 	name: string
 	containsGluten: boolean
 	containsDairy: boolean
@@ -42,8 +41,7 @@ export interface IIngredient {
 	containsEggs: boolean
 }
 
-export interface IProductIngredient {
-	id: string
+export interface IProductIngredient extends IBase {
 	amount: number
 	unit: string
 	ingredient: IIngredient

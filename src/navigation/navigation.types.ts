@@ -9,4 +9,5 @@ export type TypeTabParamList = {
 export type TypeRootStackParamList = {
 	MainTabs: TypeTabParamList
 	ProductInfo: { productId: string }
+	Auth: undefined
 }

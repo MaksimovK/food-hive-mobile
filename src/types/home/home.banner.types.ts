@@ -1,5 +1,6 @@
-export interface IBannerItem {
-	id: string
+import { IBase } from '../root.types'
+
+export interface IBannerItem extends IBase {
 	image: string
 	title: string | null
 	description: string | null

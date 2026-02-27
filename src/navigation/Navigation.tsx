@@ -1,9 +1,10 @@
-import ProductInfo from '@/components/screens/product-info/ProductInfo.tsx'
+import Auth from '@/components/screens/auth/Auth'
+import ProductInfo from '@/components/screens/product-info/ProductInfo'
 import { NavigationContainer } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import React from 'react'
-import { TypeRootStackParamList } from './navigation.types.ts'
-import { TabNavigator } from './tab/TabNavigation.tsx'
+import { TypeRootStackParamList } from './navigation.types'
+import { TabNavigator } from './tab/TabNavigation'
 
 const Stack = createNativeStackNavigator<TypeRootStackParamList>()
 
@@ -18,6 +19,10 @@ export default function Navigation() {
 				<Stack.Screen
 					name='ProductInfo'
 					component={ProductInfo}
+				/>
+				<Stack.Screen
+					name='Auth'
+					component={Auth}
 				/>
 			</Stack.Navigator>
 		</NavigationContainer>

@@ -1,5 +1,6 @@
-export interface ICategoryItem {
-	id: string
+import { IBase } from '../root.types'
+
+export interface ICategoryItem extends IBase {
 	name: string
 	image: string | null
 	description: string | null
