@@ -1,37 +1,84 @@
 import Layout from '@/components/layout/Layout'
-import { Scroll, Text, Title } from '@/components/ui'
-import { useThemeMode } from '@/hooks'
-import { CircleUserRound } from 'lucide-react-native'
-import React from 'react'
-import { Button, View } from 'react-native'
+import { Button, Scroll, Text, ThemeButton, Title } from '@/components/ui'
+import { COLORS } from '@/constants'
+import { useLogoutMutation, useThemeMode, useTypedNavigation } from '@/hooks'
+import { useUser } from '@/store'
+import { CircleUserRound, LogOut } from 'lucide-react-native'
+import React, { useCallback } from 'react'
+import { View } from 'react-native'
 
 export default function ProfileScreen() {
-	const { theme, isDark, toggleTheme } = useThemeMode()
+	const navigation = useTypedNavigation()
+	const { themeColorKey } = useThemeMode()
+	const user = useUser()
+	const { mutate: logout, isPending } = useLogoutMutation()
+
+	const handleGoToLogin = useCallback(() => {
+		navigation.navigate('Auth')
+	}, [navigation])
+
+	const handleLogout = useCallback(() => {
+		logout()
+	}, [logout])
 
 	return (
 		<Layout>
 			<Scroll>
-				<View className='flex-row justify-between items-center py-4'>
-					<Title title='Привет, Гость' />
-					<CircleUserRound size={40} />
-				</View>
+				<View className='flex-row items-center justify-between py-4'>
+					<Title title={'Профиль'} />
 
-				<View className='flex-1 items-center justify-center gap-4 px-4'>
-					<View className='w-full gap-2 mt-8'>
-						<Text
-							variant='secondary'
-							size='sm'
-							align='center'
-						>
-							Текущая тема: {theme === 'dark' ? 'Тёмная' : 'Светлая'}
-						</Text>
+					<View className='flex-row gap-2'>
+						<ThemeButton />
 
-						<Button
-							title={isDark ? 'Включить светлую тему' : 'Включить тёмную тему'}
-							onPress={toggleTheme}
+						<CircleUserRound
+							size={40}
+							color={COLORS.text.disabled[themeColorKey]}
 						/>
 					</View>
 				</View>
+
+				{user ? (
+					<Button
+						onPress={handleLogout}
+						disabled={isPending}
+						className='flex-row items-center justify-center gap-2 py-4 rounded-xl'
+						style={{
+							backgroundColor: COLORS.error[themeColorKey]
+						}}
+					>
+						<LogOut
+							size={20}
+							color={COLORS.text.onPrimary[themeColorKey]}
+						/>
+						<Text
+							size='base'
+							weight='semibold'
+							style={{
+								color: COLORS.text.onPrimary[themeColorKey]
+							}}
+						>
+							{isPending ? 'Выход...' : 'Выйти'}
+						</Text>
+					</Button>
+				) : (
+					<Button
+						onPress={handleGoToLogin}
+						className='px-8 py-4 rounded-xl mt-4'
+						style={{
+							backgroundColor: COLORS.primary[themeColorKey]
+						}}
+					>
+						<Text
+							size='lg'
+							weight='bold'
+							style={{
+								color: COLORS.text.onPrimary[themeColorKey]
+							}}
+						>
+							Войти
+						</Text>
+					</Button>
+				)}
 			</Scroll>
 		</Layout>
 	)

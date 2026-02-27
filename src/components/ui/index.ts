@@ -3,6 +3,7 @@ export { default as AddToCartButton } from './buttons/icon/add-to-cart/AddToCart
 export { default as BackButton } from './buttons/icon/back/BackButton'
 export { default as FavoriteButton } from './buttons/icon/favorite/FavoriteButton'
 export { default as IconButton } from './buttons/icon/IconButton'
+export { default as ThemeButton } from './buttons/icon/theme/ThemeButton'
 export { default as PrimaryButton } from './buttons/primary/PrimaryButton'
 export { default as LoginForm } from './forms/auth/LoginForm'
 export { default as RegisterForm } from './forms/auth/RegisterForm'

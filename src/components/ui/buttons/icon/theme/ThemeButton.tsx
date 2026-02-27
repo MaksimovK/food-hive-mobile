@@ -27,7 +27,7 @@ export default function ThemeButton({
 	return (
 		<IconButton
 			{...props}
-			className={cn(`w-[36px] h-[36px]`, className)}
+			className={cn(`w-12 h-12`, className)}
 			style={{
 				backgroundColor:
 					backgroundColor || COLORS.surfaceElevated[themeColorKey],
