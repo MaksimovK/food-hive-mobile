@@ -16,4 +16,10 @@ export { default as Loader } from './Loader'
 export { default as Scroll } from './Scroll'
 export { default as Text } from './Text'
 export { default as Title } from './Title'
+export {
+	toastError,
+	toastInfo,
+	toastShow,
+	toastSuccess
+} from './toast/toast-show'
 export { default as ToastItem } from './toast/ToastItem'

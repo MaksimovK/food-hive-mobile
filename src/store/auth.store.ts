@@ -1,3 +1,4 @@
+import { useFavoritesStore } from '@/store/favorites.store'
 import { AuthUserResponse } from '@/types'
 import EncryptedStorage from 'react-native-encrypted-storage'
 import { create, StateCreator } from 'zustand'
@@ -28,13 +29,17 @@ const initialState: IInitialState = {
 const authStore: StateCreator<AuthStateType> = (set, get) => ({
 	...initialState,
 
-	setAuth: data => {
+	setAuth: async data => {
 		set({
 			user: data.user,
 			accessToken: data.accessToken,
 			refreshToken: data.refreshToken,
 			isAuthenticated: true
 		})
+
+		const { syncWithServer, setSynced } = useFavoritesStore.getState()
+		setSynced(false)
+		await syncWithServer()
 	},
 
 	logout: () => {
@@ -44,6 +49,9 @@ const authStore: StateCreator<AuthStateType> = (set, get) => ({
 			refreshToken: null,
 			isAuthenticated: false
 		})
+
+		const { setSynced } = useFavoritesStore.getState()
+		setSynced(false)
 	},
 
 	updateUser: user => {
