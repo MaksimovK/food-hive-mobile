@@ -1,5 +1,10 @@
+import { PRODUCTS_PER_PAGE } from '@/constants'
 import { productService } from '@/services'
-import { useQuery } from '@tanstack/react-query'
+import {
+	infiniteQueryOptions,
+	useInfiniteQuery,
+	useQuery
+} from '@tanstack/react-query'
 
 export function useFetchProduct(id: string) {
 	return useQuery({
@@ -10,9 +15,24 @@ export function useFetchProduct(id: string) {
 }
 
 export function useSearchProducts(query: string) {
-	return useQuery({
+	const options = infiniteQueryOptions({
 		queryKey: ['products', query],
-		queryFn: () => productService.searchProducts(query),
+		queryFn: ({ pageParam = 0 }) =>
+			productService.searchProducts({
+				query,
+				limit: PRODUCTS_PER_PAGE,
+				offset: pageParam
+			}),
+		initialPageParam: 0,
+		getNextPageParam: (lastPage, allPages) => {
+			if (lastPage.length < PRODUCTS_PER_PAGE) {
+				return undefined
+			}
+			return allPages.length * PRODUCTS_PER_PAGE
+		},
+		select: data => data.pages.flatMap(page => page),
 		enabled: !!query
 	})
+
+	return useInfiniteQuery(options)
 }

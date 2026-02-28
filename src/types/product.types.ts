@@ -51,3 +51,9 @@ export interface IProductDetails extends IProduct {
 	category: ICategory
 	productIngredients: IProductIngredient[]
 }
+
+export interface ISearchProductsParams {
+	query: string
+	limit?: number
+	offset?: number
+}

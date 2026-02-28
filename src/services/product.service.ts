@@ -1,5 +1,5 @@
 import { axiosClassic } from '@/api/interceptor'
-import { IProduct, IProductDetails } from '@/types'
+import { IProduct, IProductDetails, ISearchProductsParams } from '@/types'
 
 class ProductService {
 	private BASE_URL = '/products'
@@ -11,9 +11,17 @@ class ProductService {
 		return response.data
 	}
 
-	async searchProducts(query: string) {
+	async searchProducts(params: ISearchProductsParams) {
+		const { query, limit = 6, offset = 0 } = params
 		const response = await axiosClassic.get<IProduct[]>(
-			`${this.BASE_URL}/search?q=${query}`
+			`${this.BASE_URL}/search`,
+			{
+				params: {
+					q: query,
+					limit,
+					offset
+				}
+			}
 		)
 		return response.data
 	}
