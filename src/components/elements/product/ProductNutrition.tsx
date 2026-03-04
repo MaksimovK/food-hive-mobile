@@ -1,4 +1,4 @@
-import ProductNutritionItem from '@/components/elements/product-info/ProductNutritionItem'
+import ProductNutritionItem from '@/components/elements/product/ProductNutritionItem'
 import { Text } from '@/components/ui'
 import { COLORS } from '@/constants'
 import { useThemeMode } from '@/hooks'

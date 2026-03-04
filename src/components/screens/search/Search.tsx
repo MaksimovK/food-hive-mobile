@@ -72,7 +72,7 @@ export default function SearchScreen() {
 			<Grid
 				scrollEnabled
 				data={products}
-				keyExtractor={item => item.id}
+				keyExtractor={item => `search-item-${item.id}`}
 				renderItem={renderProduct}
 				numColumns={2}
 				onEndReached={handleEndReached}

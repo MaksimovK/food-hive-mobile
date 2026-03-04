@@ -1,10 +1,11 @@
 import { Text } from '@/components/ui'
 import { COLORS } from '@/constants'
 import { useThemeMode } from '@/hooks'
+import { formatPrice } from '@/utils'
 import { View } from 'react-native'
 
 export interface IProductPriceProps {
-	price: string
+	price: number
 }
 
 export default function ProductPrice({ price }: IProductPriceProps) {
@@ -22,7 +23,7 @@ export default function ProductPrice({ price }: IProductPriceProps) {
 				weight='bold'
 				variant='primary'
 			>
-				{price}
+				{formatPrice(price)}
 			</Text>
 		</View>
 	)

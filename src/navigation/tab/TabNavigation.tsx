@@ -46,7 +46,9 @@ export function TabNavigator() {
 					paddingHorizontal: 12,
 					paddingTop: 12,
 					paddingBottom: 12,
-					backgroundColor: COLORS.nav.background[themeColorKey]
+					backgroundColor: COLORS.nav.background[themeColorKey],
+					borderColor: COLORS.border[themeColorKey],
+					borderTopWidth: 1
 				},
 				tabBarLabel: () => null
 			}}

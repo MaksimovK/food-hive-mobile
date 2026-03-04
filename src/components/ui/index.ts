@@ -14,6 +14,7 @@ export { default as PhoneInput } from './input/PhoneInput'
 export { default as SearchInput } from './input/SearchInput'
 export { default as Loader } from './Loader'
 export { default as Scroll } from './Scroll'
+export { default as Separator } from './Separator'
 export { default as Text } from './Text'
 export { default as Title } from './Title'
 export {

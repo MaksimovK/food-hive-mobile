@@ -1,13 +1,20 @@
 export * from './auth.store'
-export * from './favorites.store'
+export {
+	useAddToCart,
+	useCartItems,
+	useCartQuantity,
+	useCartTotalPrice,
+	useCartTotalProducts,
+	useClearCart,
+	useIsInCart,
+	useRemoveFromCart,
+	useSetCart
+} from './cart.store'
 export {
 	useClearFavorites,
 	useFavorites,
 	useIsFavorite,
-	useIsSynced,
 	useSetFavorites,
-	useSetSynced,
-	useSyncWithServer,
 	useToggleFavorite
 } from './favorites.store'
 export * from './theme.store'

@@ -1,6 +1,6 @@
 import { ProductCard } from '@/components/elements'
 import Layout from '@/components/layout/Layout'
-import { Grid, IconButton, Text } from '@/components/ui'
+import { Grid, IconButton, Title } from '@/components/ui'
 import { useClearFavorites, useFavorites } from '@/store'
 import { IProduct } from '@/types'
 import { Trash2 } from 'lucide-react-native'
@@ -19,12 +19,7 @@ export default function FavoriteScreen() {
 	if (favorites.length === 0) {
 		return (
 			<Layout className='items-center justify-center'>
-				<Text
-					variant='secondary'
-					size='lg'
-				>
-					Список избранного пуст
-				</Text>
+				<Title title='Список избранного пуст' />
 			</Layout>
 		)
 	}
@@ -34,7 +29,7 @@ export default function FavoriteScreen() {
 			<Grid
 				scrollEnabled
 				data={favorites}
-				keyExtractor={item => item.id}
+				keyExtractor={item => `favorite-item-${item.id}`}
 				renderItem={renderItem}
 				numColumns={2}
 				ListHeaderComponent={

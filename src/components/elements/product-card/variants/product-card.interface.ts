@@ -1,6 +1,6 @@
 import { IProduct } from '@/types'
 
-export type TypeProductCardVariant = 'default' | 'horizontal'
+export type TypeProductCardVariant = 'default' | 'horizontal' | 'cart'
 
 export interface IProductCardProps {
 	variant?: TypeProductCardVariant

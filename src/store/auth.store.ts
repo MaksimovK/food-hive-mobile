@@ -1,8 +1,9 @@
-import { useFavoritesStore } from '@/store/favorites.store'
 import { AuthUserResponse } from '@/types'
 import EncryptedStorage from 'react-native-encrypted-storage'
 import { create, StateCreator } from 'zustand'
 import { createJSONStorage, persist } from 'zustand/middleware'
+import { useCartStore } from './cart.store'
+import { useFavoritesStore } from './favorites.store'
 
 interface IInitialState {
 	user: AuthUserResponse | null
@@ -37,9 +38,10 @@ const authStore: StateCreator<AuthStateType> = (set, get) => ({
 			isAuthenticated: true
 		})
 
-		const { syncWithServer, setSynced } = useFavoritesStore.getState()
-		setSynced(false)
-		await syncWithServer()
+		const { syncWithServer: syncFavorites } = useFavoritesStore.getState()
+		const { syncWithServer: syncCart } = useCartStore.getState()
+
+		await Promise.all([syncFavorites(), syncCart()])
 	},
 
 	logout: () => {
@@ -50,8 +52,11 @@ const authStore: StateCreator<AuthStateType> = (set, get) => ({
 			isAuthenticated: false
 		})
 
-		const { setSynced } = useFavoritesStore.getState()
-		setSynced(false)
+		const { setSynced: setFavoritesSynced } = useFavoritesStore.getState()
+		const { setSynced: setCartSynced } = useCartStore.getState()
+
+		setFavoritesSynced(false)
+		setCartSynced(false)
 	},
 
 	updateUser: user => {

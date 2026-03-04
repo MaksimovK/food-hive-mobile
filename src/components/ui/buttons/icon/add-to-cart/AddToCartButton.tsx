@@ -1,25 +1,40 @@
+import { ProductQuantityControl } from '@/components/elements'
 import { IconButton } from '@/components/ui'
 import { COLORS } from '@/constants'
 import { useThemeMode } from '@/hooks'
+import { useAddToCart, useIsInCart } from '@/store'
+import { IProduct } from '@/types'
 import cn from 'clsx'
 import { ShoppingCart } from 'lucide-react-native'
-import React from 'react'
+import React, { useCallback } from 'react'
 import { IIconButtonProps } from '../icon-button.interface'
 
-export interface IAddToCartButtonProps extends IIconButtonProps {}
+export interface IAddToCartButtonProps extends IIconButtonProps {
+	product: IProduct
+}
 
 export default function AddToCartButton({
 	icon = ShoppingCart,
-	onPress,
 	className,
+	product,
 	...props
 }: IAddToCartButtonProps) {
+	const addToCart = useAddToCart()
+	const isInCart = useIsInCart(product.id)
 	const { themeColorKey } = useThemeMode()
+
+	const handleAddToCart = useCallback(() => {
+		addToCart(product, 1)
+	}, [addToCart, product])
+
+	if (isInCart) {
+		return <ProductQuantityControl product={product} />
+	}
 
 	return (
 		<IconButton
 			{...props}
-			className={cn(`rounded-xl py-1.5`, className)}
+			className={cn(`px-4 py-2`, className)}
 			icon={icon}
 			text='В корзину'
 			style={{
@@ -27,7 +42,7 @@ export default function AddToCartButton({
 				...props.style
 			}}
 			iconColor={COLORS.text.primary[themeColorKey]}
-			onPress={onPress}
+			onPress={handleAddToCart}
 		/>
 	)
 }

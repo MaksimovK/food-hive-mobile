@@ -21,11 +21,10 @@ export default function ProductCardDefault({
 	return (
 		<Button
 			onPress={onCardPress}
-			className={cn(`rounded-2xl overflow-hidden`, className)}
+			className={cn(`rounded-2xl overflow-hidden border`, className)}
 			style={{
 				backgroundColor: COLORS.surface[themeColorKey],
-				borderColor: COLORS.border[themeColorKey],
-				borderWidth: 1
+				borderColor: COLORS.border[themeColorKey]
 			}}
 		>
 			<View className='relative'>
@@ -59,7 +58,7 @@ export default function ProductCardDefault({
 					{formatPrice(product.price)}
 				</Text>
 
-				<AddToCartButton onPress={() => console.log('cart')} />
+				<AddToCartButton product={product} />
 			</View>
 		</Button>
 	)
