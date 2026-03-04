@@ -2,14 +2,14 @@ import { IconButton } from '@/components/ui'
 import { COLORS, DEFAULT_ICON_SIZE } from '@/constants'
 import { useThemeMode } from '@/hooks'
 import { useIsFavorite, useToggleFavorite } from '@/store'
-import { IProduct } from '@/types'
+import { IFavoriteProduct } from '@/types'
 import { Heart } from 'lucide-react-native'
 import React, { useCallback } from 'react'
 import { IIconButtonProps } from '../icon-button.interface'
 
 export interface IFavoriteButtonProps extends IIconButtonProps {
 	iconSize?: number
-	product: IProduct
+	product: IFavoriteProduct
 }
 
 export default function FavoriteButton({

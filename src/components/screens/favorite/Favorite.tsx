@@ -1,6 +1,6 @@
-import { ProductCard } from '@/components/elements'
+import { Empty, ProductCard } from '@/components/elements'
 import Layout from '@/components/layout/Layout'
-import { Grid, IconButton, Title } from '@/components/ui'
+import { Grid, IconButton } from '@/components/ui'
 import { useClearFavorites, useFavorites } from '@/store'
 import { IProduct } from '@/types'
 import { Trash2 } from 'lucide-react-native'
@@ -17,11 +17,7 @@ export default function FavoriteScreen() {
 	)
 
 	if (favorites.length === 0) {
-		return (
-			<Layout className='items-center justify-center'>
-				<Title title='Список избранного пуст' />
-			</Layout>
-		)
+		return <Empty title='Список избранного пуст' />
 	}
 
 	return (

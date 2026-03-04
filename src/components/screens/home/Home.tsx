@@ -28,6 +28,11 @@ export default function HomeScreen() {
 	return (
 		<Layout>
 			<Scroll ref={scrollRef}>
+				<Title
+					className='pt-4'
+					title='Food Hive'
+				/>
+
 				<Banners banners={banners} />
 
 				<Title title='Категории' />

@@ -1,6 +1,7 @@
 import { AddToCartButton, Button, FavoriteButton, Text } from '@/components/ui'
 import { COLORS } from '@/constants'
 import { useThemeMode } from '@/hooks'
+import { ICartProduct, IFavoriteProduct } from '@/types'
 import { formatPrice, getFullImageUrl } from '@/utils'
 import cn from 'clsx'
 import React from 'react'
@@ -13,9 +14,10 @@ export interface IProductCardVariantProps {
 }
 
 export default function ProductCardDefault({
-	props: { product, onCardPress },
+	props,
 	className
 }: IProductCardVariantProps) {
+	const { product, onCardPress } = props
 	const { themeColorKey } = useThemeMode()
 
 	return (
@@ -36,7 +38,7 @@ export default function ProductCardDefault({
 
 				<FavoriteButton
 					className='w-[32px] h-[32px] absolute top-2 right-2'
-					product={product}
+					product={product as IFavoriteProduct}
 				/>
 			</View>
 
@@ -58,7 +60,7 @@ export default function ProductCardDefault({
 					{formatPrice(product.price)}
 				</Text>
 
-				<AddToCartButton product={product} />
+				<AddToCartButton product={product as ICartProduct} />
 			</View>
 		</Button>
 	)

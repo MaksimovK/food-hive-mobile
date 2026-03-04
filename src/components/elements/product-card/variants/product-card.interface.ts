@@ -1,9 +1,10 @@
-import { IProduct } from '@/types'
+import { ICartProduct, IProduct } from '@/types'
 
-export type TypeProductCardVariant = 'default' | 'horizontal' | 'cart'
+export type TypeProductCardVariant = 'default' | 'horizontal'
 
 export interface IProductCardProps {
 	variant?: TypeProductCardVariant
-	product: IProduct
+	product: IProduct | ICartProduct
 	onCardPress?: () => void
+	showQuantityControl?: boolean
 }

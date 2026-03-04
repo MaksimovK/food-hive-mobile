@@ -1,5 +1,10 @@
-import { ProductPrice } from '@/components/elements'
+import {
+	ProductQuantityControl,
+	ProductServingInfo
+} from '@/components/elements'
 import { Button, FavoriteButton, Text } from '@/components/ui'
+import { useCartItemTotal } from '@/store'
+import { ICartProduct, IFavoriteProduct } from '@/types'
 import { getFullImageUrl } from '@/utils'
 import cn from 'clsx'
 import React from 'react'
@@ -12,9 +17,12 @@ export interface IProductCardVariantProps {
 }
 
 export default function ProductCardHorizontal({
-	props: { product, onCardPress },
+	props,
 	className
 }: IProductCardVariantProps) {
+	const { product, onCardPress, showQuantityControl } = props
+	const totalPrice = useCartItemTotal(product.id)
+
 	return (
 		<Button
 			onPress={onCardPress}
@@ -31,7 +39,7 @@ export default function ProductCardHorizontal({
 				/>
 			</View>
 
-			<View className='flex-1 p-3'>
+			<View className='flex-1 px-3'>
 				<Text
 					size='lg'
 					weight='medium'
@@ -41,12 +49,27 @@ export default function ProductCardHorizontal({
 					{product.name}
 				</Text>
 
-				<ProductPrice price={product.price} />
+				<ProductServingInfo
+					price={
+						showQuantityControl ? totalPrice || product.price : product.price
+					}
+					servingSize={product.servingSize}
+					unit={product.unit}
+				/>
+
+				{showQuantityControl && (
+					<View className='justify-end items-end'>
+						<ProductQuantityControl
+							className='px-0'
+							product={product as ICartProduct}
+						/>
+					</View>
+				)}
 			</View>
 
 			<FavoriteButton
 				className='absolute top-2 right-2'
-				product={product}
+				product={product as IFavoriteProduct}
 			/>
 		</Button>
 	)

@@ -2,14 +2,14 @@ import { IconButton, Text } from '@/components/ui'
 import { COLORS, DEFAULT_ICON_SIZE } from '@/constants'
 import { useThemeMode } from '@/hooks'
 import { useAddToCart, useCartQuantity, useRemoveFromCart } from '@/store'
-import { IProduct } from '@/types'
+import { ICartProduct } from '@/types'
 import cn from 'clsx'
 import { Minus, Plus, Trash2 } from 'lucide-react-native'
 import React, { useCallback } from 'react'
 import { View, ViewProps } from 'react-native'
 
 export interface IProductQuantityControlProps extends ViewProps {
-	product: IProduct
+	product: ICartProduct
 	className?: string
 }
 

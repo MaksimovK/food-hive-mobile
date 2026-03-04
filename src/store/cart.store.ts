@@ -1,11 +1,11 @@
 import { cartService } from '@/services'
-import { ICartItem, ICartResponse, IProduct } from '@/types'
+import { ICartProduct, ICartResponse } from '@/types'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { create, StateCreator } from 'zustand'
 import { createJSONStorage, persist } from 'zustand/middleware'
 
 interface IInitialState {
-	items: ICartItem[]
+	items: ICartProduct[]
 	totalProducts: number
 	totalPrice: number
 	isSynced: boolean
@@ -14,7 +14,7 @@ interface IInitialState {
 interface IActions {
 	isInCart: (productId: string) => boolean
 	getQuantity: (productId: string) => number
-	addToCart: (product: IProduct, quantity?: number) => Promise<void>
+	addToCart: (product: ICartProduct, quantity?: number) => Promise<void>
 	removeFromCart: (productId: string, quantity?: number) => Promise<void>
 	clearCart: () => Promise<void>
 	setCart: (cart: ICartResponse) => void
@@ -32,7 +32,7 @@ const initialState: IInitialState = {
 }
 
 const cartUtils = {
-	add: (items: ICartItem[], product: IProduct, quantity: number) => {
+	add: (items: ICartProduct[], product: ICartProduct, quantity: number) => {
 		const existingIndex = items.findIndex(p => p.id === product.id)
 		if (existingIndex > -1) {
 			const newItems = [...items]
@@ -50,7 +50,7 @@ const cartUtils = {
 		]
 	},
 
-	remove: (items: ICartItem[], productId: string, quantity?: number) => {
+	remove: (items: ICartProduct[], productId: string, quantity?: number) => {
 		const existing = items.find(p => p.id === productId)
 		if (!existing) return items
 
@@ -68,7 +68,7 @@ const cartUtils = {
 		)
 	},
 
-	calculateTotals: (items: ICartItem[]) => ({
+	calculateTotals: (items: ICartProduct[]) => ({
 		totalProducts: items.reduce((sum, item) => sum + item.quantity, 0),
 		totalPrice: items.reduce((sum, item) => sum + item.itemTotal, 0)
 	})
@@ -176,41 +176,52 @@ const cartStore: StateCreator<CartStateType> = (set, get) => ({
 				return
 			}
 
-			const localIds = new Set(localItems.map(p => p.id))
 			const serverIds = new Set(serverCart.items.map(p => p.id))
 
+			// Товары, которые есть только локально — добавляем на сервер
 			const toAdd = localItems
 				.filter(p => !serverIds.has(p.id))
 				.map(p => ({ productId: p.id, quantity: p.quantity }))
 
-			const toMerge = serverCart.items.filter(p => !localIds.has(p.id))
-
-			// Обновляем количество для товаров, которые есть и локально, и на сервере
+			// Товары, которые есть и локально, и на сервере — берём максимальное количество
+			// Если локально больше — обновляем сервер
 			const toUpdate = localItems
 				.filter(p => serverIds.has(p.id))
 				.map(localItem => {
 					const serverItem = serverCart.items.find(s => s.id === localItem.id)
-					return serverItem ? { ...serverItem } : null
+					if (!serverItem) return null
+
+					if (localItem.quantity > serverItem.quantity) {
+						return {
+							productId: localItem.id,
+							quantity: localItem.quantity - serverItem.quantity
+						}
+					}
+					return null
 				})
-				.filter(Boolean) as ICartItem[]
+				.filter(Boolean) as { productId: string; quantity: number }[]
 
 			if (toAdd.length > 0) {
 				await cartService.bulkAdd(toAdd)
 			}
 
-			const merged = [...toUpdate, ...toMerge]
-			const uniqueIds = new Set<string>()
-			const uniqueItems = merged.filter(p => {
-				if (uniqueIds.has(p.id)) return false
-				uniqueIds.add(p.id)
-				return true
-			})
+			if (toUpdate.length > 0) {
+				await Promise.all(
+					toUpdate.map(item =>
+						cartService.addToCart({
+							productId: item.productId,
+							quantity: item.quantity
+						})
+					)
+				)
+			}
 
-			const totals = cartUtils.calculateTotals(uniqueItems)
+			const updatedCart = await cartService.getCart()
 
 			set({
-				items: uniqueItems,
-				...totals,
+				items: updatedCart.items,
+				totalProducts: updatedCart.totalProducts,
+				totalPrice: updatedCart.totalPrice,
 				isSynced: true
 			})
 		} catch (error) {
@@ -245,6 +256,8 @@ export const useCartQuantity = (productId: string) =>
 	useCartStore(
 		state => state.items.find(p => p.id === productId)?.quantity || 0
 	)
+export const useCartItemTotal = (productId: string) =>
+	useCartStore(state => state.items.find(p => p.id === productId)?.itemTotal)
 export const useAddToCart = () => useCartStore(state => state.addToCart)
 export const useRemoveFromCart = () =>
 	useCartStore(state => state.removeFromCart)

@@ -2,6 +2,7 @@ export * from './auth.store'
 export {
 	useAddToCart,
 	useCartItems,
+	useCartItemTotal,
 	useCartQuantity,
 	useCartTotalPrice,
 	useCartTotalProducts,
@@ -15,6 +16,7 @@ export {
 	useFavorites,
 	useIsFavorite,
 	useSetFavorites,
-	useToggleFavorite
+	useToggleFavorite,
+	useFavoriteTotal
 } from './favorites.store'
 export * from './theme.store'

@@ -1,19 +1,19 @@
 import { favoriteService } from '@/services'
-import { IProduct } from '@/types'
+import { IFavoriteProduct } from '@/types'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { create, StateCreator } from 'zustand'
 import { createJSONStorage, persist } from 'zustand/middleware'
 
 interface IInitialState {
-	favorites: IProduct[]
+	favorites: IFavoriteProduct[]
 	isSynced: boolean
 }
 
 interface IActions {
 	isFavorite: (productId: string) => boolean
-	toggleFavorite: (product: IProduct) => void
+	toggleFavorite: (product: IFavoriteProduct) => void
 	clearFavorites: () => void
-	setFavorites: (favorites: IProduct[]) => void
+	setFavorites: (favorites: IFavoriteProduct[]) => void
 	syncWithServer: () => Promise<void>
 	setSynced: (synced: boolean) => void
 }
@@ -26,15 +26,15 @@ const initialState: IInitialState = {
 }
 
 const favoriteUtils = {
-	add: (favorites: IProduct[], product: IProduct) =>
+	add: (favorites: IFavoriteProduct[], product: IFavoriteProduct) =>
 		favorites.some(p => p.id === product.id)
 			? favorites
 			: [...favorites, product],
 
-	remove: (favorites: IProduct[], productId: string) =>
+	remove: (favorites: IFavoriteProduct[], productId: string) =>
 		favorites.filter(p => p.id !== productId),
 
-	toggle: (favorites: IProduct[], product: IProduct) => {
+	toggle: (favorites: IFavoriteProduct[], product: IFavoriteProduct) => {
 		const exists = favorites.some(p => p.id === product.id)
 		return exists
 			? favoriteUtils.remove(favorites, product.id)
@@ -92,25 +92,17 @@ const favoritesStore: StateCreator<FavoritesStateType> = (set, get) => ({
 				return
 			}
 
-			const localIds = new Set(localFavorites.map(p => p.id))
 			const serverIds = new Set(serverFavorites.map(p => p.id))
 
 			const toAdd = localFavorites.filter(p => !serverIds.has(p.id))
-			const toMerge = serverFavorites.filter(p => !localIds.has(p.id))
 
 			if (toAdd.length > 0) {
 				await favoriteService.bulkAdd(toAdd.map(p => ({ id: p.id })))
 			}
 
-			const merged = [...localFavorites, ...toMerge]
-			const uniqueIds = new Set<string>()
-			const uniqueFavorites = merged.filter(p => {
-				if (uniqueIds.has(p.id)) return false
-				uniqueIds.add(p.id)
-				return true
-			})
+			const updatedServerFavorites = await favoriteService.findAll()
 
-			set({ favorites: uniqueFavorites, isSynced: true })
+			set({ favorites: updatedServerFavorites, isSynced: true })
 		} catch (error) {
 			console.error('Failed to sync favorites with server:', error)
 			set({
@@ -132,6 +124,8 @@ export const useFavoritesStore = create<FavoritesStateType>()(
 )
 
 export const useFavorites = () => useFavoritesStore(state => state.favorites)
+export const useFavoriteTotal = () =>
+	useFavoritesStore(state => state.favorites.length)
 export const useIsFavorite = (productId: string) =>
 	useFavoritesStore(state => state.favorites.some(p => p.id === productId))
 export const useToggleFavorite = () =>

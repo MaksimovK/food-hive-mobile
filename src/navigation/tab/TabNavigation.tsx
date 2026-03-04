@@ -1,6 +1,7 @@
 import { COLORS } from '@/constants/colors.constant'
 import { DEFAULT_ICON_SIZE } from '@/constants/component.constant'
 import { useThemeMode } from '@/hooks'
+import { useCartTotalProducts, useFavoriteTotal } from '@/store'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import {
 	Heart,
@@ -21,6 +22,8 @@ const Tab = createBottomTabNavigator<TypeTabParamList>()
 
 export function TabNavigator() {
 	const { themeColorKey } = useThemeMode()
+	const totalCart = useCartTotalProducts()
+	const totalFavorites = useFavoriteTotal()
 
 	function renderIcon(Icon: LucideIcon, focused: boolean) {
 		return (
@@ -71,14 +74,28 @@ export function TabNavigator() {
 				name='FavoriteStack'
 				component={FavoriteStack}
 				options={{
-					tabBarIcon: ({ focused }) => renderIcon(Heart, focused)
+					tabBarIcon: ({ focused }) => renderIcon(Heart, focused),
+					tabBarBadge: totalFavorites,
+					tabBarBadgeStyle: {
+						top: -2,
+						right: 0,
+						backgroundColor: COLORS.primary[themeColorKey],
+						borderRadius: 100
+					}
 				}}
 			/>
 			<Tab.Screen
 				name='CartStack'
 				component={CartStack}
 				options={{
-					tabBarIcon: ({ focused }) => renderIcon(ShoppingCart, focused)
+					tabBarIcon: ({ focused }) => renderIcon(ShoppingCart, focused),
+					tabBarBadge: totalCart,
+					tabBarBadgeStyle: {
+						top: -2,
+						right: 0,
+						backgroundColor: COLORS.primary[themeColorKey],
+						borderRadius: 100
+					}
 				}}
 			/>
 			<Tab.Screen

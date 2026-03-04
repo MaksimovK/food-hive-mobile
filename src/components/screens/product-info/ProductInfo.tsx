@@ -9,8 +9,8 @@ import {
 import Layout from '@/components/layout/Layout'
 import { Loader, Scroll } from '@/components/ui'
 import { useFetchProduct, useTypedRoute } from '@/hooks'
-import { useCartQuantity } from '@/store'
-import React, { useMemo } from 'react'
+import { useCartItemTotal } from '@/store'
+import React from 'react'
 import { View } from 'react-native'
 
 export default function ProductInfoScreen() {
@@ -18,12 +18,7 @@ export default function ProductInfoScreen() {
 	const { productId } = route.params
 
 	const { data: product, isLoading } = useFetchProduct(productId)
-	const quantity = useCartQuantity(productId)
-
-	const totalPrice = useMemo(
-		() => (product?.price ?? 0) * (quantity || 1),
-		[product?.price, quantity]
-	)
+	const totalPrice = useCartItemTotal(productId)
 
 	if (isLoading) return <Loader />
 
@@ -60,7 +55,7 @@ export default function ProductInfoScreen() {
 
 			<ProductInfoFooter
 				product={product}
-				totalPrice={totalPrice}
+				totalPrice={totalPrice || product.price}
 			/>
 		</Layout>
 	)

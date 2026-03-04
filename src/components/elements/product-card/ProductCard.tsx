@@ -2,7 +2,6 @@ import { useTypedNavigation } from '@/hooks'
 import React, { ComponentType } from 'react'
 import { ViewProps } from 'react-native'
 import { IViewElement } from '../element.types'
-import ProductCardCart from './variants/cart/ProductCardCart'
 import ProductCardDefault from './variants/default/ProductCardDefault'
 import ProductCardHorizontal from './variants/horizontal/ProductCardHorizontal'
 import {
@@ -17,6 +16,7 @@ type TypeProductCardProps = IProductCardProps & {
 
 const ProductCard = ({
 	variant = 'default',
+	showQuantityControl = false,
 	product,
 	onPress,
 	container,
@@ -33,7 +33,6 @@ const ProductCard = ({
 		TypeProductCardVariant,
 		ComponentType<IViewElement<IProductCardProps>>
 	> = {
-		cart: ProductCardCart,
 		default: ProductCardDefault,
 		horizontal: ProductCardHorizontal
 	}
@@ -43,7 +42,8 @@ const ProductCard = ({
 	const cardProps: IProductCardProps = {
 		variant: variant,
 		product: product,
-		onCardPress: onPress ?? handleOpenProductDetail
+		onCardPress: onPress ?? handleOpenProductDetail,
+		showQuantityControl: showQuantityControl
 	}
 
 	return (

@@ -1,7 +1,7 @@
-import { ProductCard } from '@/components/elements'
+import { Empty, ProductCard } from '@/components/elements'
 import CartInfoFooter from '@/components/elements/cart/CartInfoFooter'
 import Layout from '@/components/layout/Layout'
-import { IconButton, Scroll, Separator, Title } from '@/components/ui'
+import { IconButton, Scroll, Separator } from '@/components/ui'
 import {
 	useCartItems,
 	useCartTotalPrice,
@@ -19,11 +19,7 @@ export default function CartScreen() {
 	const clearCart = useClearCart()
 
 	if (totalProducts === 0) {
-		return (
-			<Layout className='justify-center items-center'>
-				<Title title='Корзина пуста' />
-			</Layout>
-		)
+		return <Empty title='Корзина пуста' />
 	}
 
 	return (
@@ -43,7 +39,8 @@ export default function CartScreen() {
 						className='pt-4'
 					>
 						<ProductCard
-							variant='cart'
+							variant='horizontal'
+							showQuantityControl
 							product={product}
 						/>
 

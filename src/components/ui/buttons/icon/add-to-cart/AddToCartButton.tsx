@@ -3,14 +3,14 @@ import { IconButton } from '@/components/ui'
 import { COLORS } from '@/constants'
 import { useThemeMode } from '@/hooks'
 import { useAddToCart, useIsInCart } from '@/store'
-import { IProduct } from '@/types'
+import { ICartProduct } from '@/types'
 import cn from 'clsx'
 import { ShoppingCart } from 'lucide-react-native'
 import React, { useCallback } from 'react'
 import { IIconButtonProps } from '../icon-button.interface'
 
 export interface IAddToCartButtonProps extends IIconButtonProps {
-	product: IProduct
+	product: ICartProduct
 }
 
 export default function AddToCartButton({
