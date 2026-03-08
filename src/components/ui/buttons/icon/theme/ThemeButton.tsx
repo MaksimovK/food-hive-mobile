@@ -6,13 +6,10 @@ import { Moon, Sun } from 'lucide-react-native'
 import React from 'react'
 import { IIconButtonProps } from '../icon-button.interface'
 
-export interface IThemeButtonProps extends IIconButtonProps {
-	backgroundColor?: string
-}
+export interface IThemeButtonProps extends IIconButtonProps {}
 
 export default function ThemeButton({
 	icon,
-	backgroundColor,
 	className,
 	...props
 }: IThemeButtonProps) {
@@ -29,11 +26,10 @@ export default function ThemeButton({
 			{...props}
 			className={cn(`w-12 h-12`, className)}
 			style={{
-				backgroundColor:
-					backgroundColor || COLORS.surfaceElevated[themeColorKey],
 				...props.style
 			}}
 			icon={icon}
+			size={30}
 			iconColor={COLORS.text.primary[themeColorKey]}
 			onPress={toggleTheme}
 		/>

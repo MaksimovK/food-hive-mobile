@@ -1,15 +1,15 @@
 import { axiosClassic, axiosWithAuth } from '@/api/interceptor'
 import {
 	AuthResponse,
-	LoginDto,
+	LoginRequest,
 	RefreshTokenResponse,
-	RegisterDto
+	RegisterRequest
 } from '@/types'
 
 class AuthService {
 	private BASE_URL = '/auth'
 
-	async register(dto: RegisterDto): Promise<AuthResponse> {
+	async register(dto: RegisterRequest): Promise<AuthResponse> {
 		const response = await axiosClassic.post<AuthResponse>(
 			`${this.BASE_URL}/register`,
 			dto
@@ -17,7 +17,7 @@ class AuthService {
 		return response.data
 	}
 
-	async login(dto: LoginDto): Promise<AuthResponse> {
+	async login(dto: LoginRequest): Promise<AuthResponse> {
 		const response = await axiosClassic.post<AuthResponse>(
 			`${this.BASE_URL}/login`,
 			dto

@@ -7,14 +7,16 @@ export const toastShow = ({
 	text,
 	position = 'bottom',
 	autoHide = true,
-	visibilityTime = DEFAULT_TOAST_VISIBLE_TIME
+	visibilityTime = DEFAULT_TOAST_VISIBLE_TIME,
+	bottomOffset = 70
 }: IToastProps) => {
 	Toast.show({
 		type,
 		text1: text,
 		position,
 		autoHide,
-		visibilityTime
+		visibilityTime,
+		bottomOffset
 	})
 }
 

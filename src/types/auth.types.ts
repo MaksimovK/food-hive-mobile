@@ -1,22 +1,11 @@
-import { IBase } from './root.types'
+import { UserResponse } from './user.types'
 
-export type RoleType = 'user' | 'admin'
-
-export interface AuthUserResponse extends IBase {
-	email: string
-	name: string | null
-	phone: string | null
-	avatar: string | null
-	role: RoleType
-	createdAt: string
-}
-
-export interface LoginDto {
+export interface LoginRequest {
 	email: string
 	password: string
 }
 
-export interface RegisterDto {
+export interface RegisterRequest {
 	email: string
 	password: string
 	name?: string
@@ -24,7 +13,7 @@ export interface RegisterDto {
 }
 
 export interface AuthResponse {
-	user: AuthUserResponse
+	user: UserResponse
 	accessToken: string
 	refreshToken: string
 }

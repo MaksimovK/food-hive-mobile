@@ -1,4 +1,4 @@
-import { AuthUserResponse } from '@/types'
+import { UserResponse } from '@/types'
 import EncryptedStorage from 'react-native-encrypted-storage'
 import { create, StateCreator } from 'zustand'
 import { createJSONStorage, persist } from 'zustand/middleware'
@@ -6,7 +6,7 @@ import { useCartStore } from './cart.store'
 import { useFavoritesStore } from './favorites.store'
 
 interface IInitialState {
-	user: AuthUserResponse | null
+	user: UserResponse | null
 	accessToken: string | null
 	refreshToken: string | null
 	isAuthenticated: boolean
@@ -15,7 +15,7 @@ interface IInitialState {
 interface IActions {
 	setAuth: (data: Omit<IInitialState, 'isAuthenticated'>) => void
 	logout: () => void
-	updateUser: (user: Partial<AuthUserResponse>) => void
+	updateUser: (user: Partial<UserResponse>) => void
 }
 
 export type AuthStateType = IInitialState & IActions
