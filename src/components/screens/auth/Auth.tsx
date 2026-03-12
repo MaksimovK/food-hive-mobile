@@ -1,5 +1,5 @@
 import Layout from '@/components/layout/Layout'
-import { LoginForm, RegisterForm, Scroll } from '@/components/ui'
+import { BackButton, LoginForm, RegisterForm, Scroll } from '@/components/ui'
 import { useTypedNavigation } from '@/hooks'
 import React, { useCallback, useState } from 'react'
 
@@ -24,6 +24,11 @@ export default function Auth() {
 	return (
 		<Layout>
 			<Scroll contentContainerClassName='flex-1 justify-center'>
+				<BackButton
+					size={30}
+					className='absolute top-4 left-0'
+				/>
+
 				{authType === 'login' ? (
 					<LoginForm
 						onSuccess={handleSuccess}

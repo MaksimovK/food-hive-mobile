@@ -2,7 +2,7 @@ import { IBase } from './root.types'
 
 export type RoleType = 'user' | 'admin'
 
-export interface UserResponse extends IBase {
+export interface IUser extends IBase {
 	email: string
 	name: string | null
 	phone: string | null
@@ -11,7 +11,7 @@ export interface UserResponse extends IBase {
 	createdAt: string
 }
 
-export interface UpdateProfileRequest {
+export interface IUpdateProfileRequest {
 	name?: string | null
 	phone?: string | null
 	avatar?: string | null

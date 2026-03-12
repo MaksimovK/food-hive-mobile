@@ -6,7 +6,6 @@ export type ThemeMode = 'light' | 'dark' | 'system'
 
 interface IInitialState {
 	theme: ThemeMode
-	isDark: boolean
 }
 
 interface IActions {
@@ -17,25 +16,19 @@ interface IActions {
 export type ThemeStateType = IInitialState & IActions
 
 const initialState: IInitialState = {
-	theme: 'light',
-	isDark: false
+	theme: 'light'
 }
 
 const themeStore: StateCreator<ThemeStateType> = (set, get) => ({
 	...initialState,
 
 	setTheme: theme => {
-		const isDark = theme === 'dark'
-		set({
-			theme,
-			isDark
-		})
+		set({ theme })
 	},
 	toggleTheme: () => {
 		const newTheme = get().theme === 'light' ? 'dark' : 'light'
 		set({
-			theme: newTheme,
-			isDark: newTheme === 'dark'
+			theme: newTheme
 		})
 	}
 })
@@ -44,11 +37,17 @@ export const useThemeStore = create<ThemeStateType>()(
 	persist(themeStore, {
 		name: 'theme-storage',
 		storage: createJSONStorage(() => AsyncStorage),
-		partialize: state => ({ theme: state.theme, isDark: state.isDark })
+		partialize: state => ({ theme: state.theme })
 	})
 )
 
 export const useTheme = () => useThemeStore(state => state.theme)
-export const useIsDark = () => useThemeStore(state => state.isDark)
 export const useToggleTheme = () => useThemeStore(state => state.toggleTheme)
 export const useSetTheme = () => useThemeStore(state => state.setTheme)
+export const useThemeState = () => {
+	const theme = useThemeStore(state => state.theme)
+	const toggleTheme = useThemeStore(state => state.toggleTheme)
+	const setTheme = useThemeStore(state => state.setTheme)
+
+	return { theme, toggleTheme, setTheme }
+}

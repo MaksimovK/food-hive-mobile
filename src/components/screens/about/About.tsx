@@ -1,5 +1,5 @@
 import Layout from '@/components/layout/Layout'
-import { Scroll, Text, Title } from '@/components/ui'
+import { BackButton, Scroll, Text, Title } from '@/components/ui'
 import React from 'react'
 import { View } from 'react-native'
 
@@ -8,6 +8,10 @@ export default function AboutScreen() {
 		<Layout>
 			<Scroll>
 				<View className='items-center justify-center py-4 '>
+					<BackButton
+						size={30}
+						className='absolute left-0 top-4'
+					/>
 					<Title title='О нас' />
 					<View className='mt-4 gap-4'>
 						<Text size='base'>

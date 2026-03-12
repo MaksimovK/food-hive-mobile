@@ -1,4 +1,4 @@
-import { UserResponse } from './user.types'
+import { IUser } from './user.types'
 
 export interface LoginRequest {
 	email: string
@@ -13,7 +13,7 @@ export interface RegisterRequest {
 }
 
 export interface AuthResponse {
-	user: UserResponse
+	user: IUser
 	accessToken: string
 	refreshToken: string
 }

@@ -1,3 +1,4 @@
+import { ProfileHeader } from '@/components/elements'
 import Layout from '@/components/layout/Layout'
 import {
 	Button,
@@ -5,18 +6,17 @@ import {
 	Scroll,
 	Text,
 	ThemeButton,
-	Title,
+	ThemeModal,
 	toastInfo
 } from '@/components/ui'
 import { COLORS, DEFAULT_ICON_SIZE } from '@/constants'
 import { useLogoutMutation, useThemeMode, useTypedNavigation } from '@/hooks'
 import { ProfileStackParamList } from '@/navigation/stack/profile/ProfileStack'
 import { useUser } from '@/store'
-import { getFullImageUrl } from '@/utils'
 import cn from 'clsx'
-import { CircleUserRound, LogOut } from 'lucide-react-native'
-import React, { useCallback } from 'react'
-import { Image, View, ViewProps } from 'react-native'
+import { Edit2, LogOut } from 'lucide-react-native'
+import React, { useCallback, useState } from 'react'
+import { View, ViewProps } from 'react-native'
 import { profileMenu } from './profile-menu.data'
 
 function RenderMenu({ className, ...props }: ViewProps) {
@@ -69,6 +69,7 @@ export default function ProfileScreen() {
 
 	const { themeColorKey } = useThemeMode()
 	const { mutate: logout, isPending } = useLogoutMutation()
+	const [isThemeModalVisible, setIsThemeModalVisible] = useState(false)
 
 	const handleGoToLogin = useCallback(() => {
 		navigation.navigate('Auth')
@@ -78,62 +79,78 @@ export default function ProfileScreen() {
 		logout()
 	}, [logout])
 
+	const handleOpenThemeModal = useCallback(() => {
+		setIsThemeModalVisible(true)
+	}, [])
+
+	const handleCloseThemeModal = useCallback(() => {
+		setIsThemeModalVisible(false)
+	}, [])
+
 	if (user) {
 		return (
 			<Layout>
 				<Scroll>
-					<View className='flex-row items-center justify-between py-4 flex-wrap gap-2'>
-						<Title
-							className='flex-wrap'
-							title={`Привет, ${user.name || 'Гость'}`}
-						/>
+					<ProfileHeader user={user} />
 
-						<View className='flex-row items-center gap-6 mr-1'>
-							<ThemeButton />
+					<View className='flex-row items-center justify-between mb-3 gap-2'>
+						<Button
+							onPress={handleLogout}
+							disabled={isPending}
+							isLoading={isPending}
+							className='w-1/2 flex-row items-center justify-center gap-2 py-4 rounded-2xl'
+							style={{
+								backgroundColor: COLORS.error[themeColorKey]
+							}}
+						>
+							<LogOut
+								size={DEFAULT_ICON_SIZE}
+								color={COLORS.text.onPrimary[themeColorKey]}
+							/>
+							<Text
+								size='base'
+								weight='semibold'
+								style={{
+									color: COLORS.text.onPrimary[themeColorKey]
+								}}
+							>
+								Выйти
+							</Text>
+						</Button>
 
-							<View className='flex-row items-center gap-2'>
-								{user.avatar ? (
-									<Image
-										source={getFullImageUrl(user.avatar)}
-										className='w-10 h-10 rounded-2xl'
-										resizeMode='cover'
-									/>
-								) : (
-									<IconButton
-										icon={CircleUserRound}
-										size={40}
-									/>
-								)}
-							</View>
-						</View>
+						<ThemeButton onPress={handleOpenThemeModal} />
 					</View>
+
+					<Button
+						className='p-4 rounded-2xl gap-2'
+						style={{
+							backgroundColor: COLORS.surface[themeColorKey]
+						}}
+					>
+						<View className='flex-row items-center gap-2 justify-between'>
+							<Text size='lg'>Изменить профиль</Text>
+							<IconButton icon={Edit2} />
+						</View>
+
+						<View className='items-end'>
+							<Text
+								size='lg'
+								weight='medium'
+							>
+								{user.name}
+							</Text>
+							<Text size='lg'>{user.email}</Text>
+							<Text size='lg'>{user.phone}</Text>
+						</View>
+					</Button>
 
 					<RenderMenu />
 				</Scroll>
 
-				<Button
-					onPress={handleLogout}
-					disabled={isPending}
-					isLoading={isPending}
-					className='flex-row items-center justify-center gap-2 py-4 rounded-2xl absolute bottom-4 left-4 right-4'
-					style={{
-						backgroundColor: COLORS.error[themeColorKey]
-					}}
-				>
-					<LogOut
-						size={DEFAULT_ICON_SIZE}
-						color={COLORS.text.onPrimary[themeColorKey]}
-					/>
-					<Text
-						size='base'
-						weight='semibold'
-						style={{
-							color: COLORS.text.onPrimary[themeColorKey]
-						}}
-					>
-						Выйти
-					</Text>
-				</Button>
+				<ThemeModal
+					visible={isThemeModalVisible}
+					onClose={handleCloseThemeModal}
+				/>
 			</Layout>
 		)
 	}
@@ -141,41 +158,37 @@ export default function ProfileScreen() {
 	return (
 		<Layout>
 			<Scroll>
-				<View className='flex-row items-center justify-between py-4 flex-wrap gap-2'>
-					<Title
-						className='flex-wrap'
-						title='Привет, Гость'
-					/>
+				<ProfileHeader />
 
-					<View className='flex-row items-center gap-6 mr-1'>
-						<ThemeButton />
-						<IconButton
-							icon={CircleUserRound}
-							size={40}
-						/>
-					</View>
+				<View className='flex-row items-center justify-between gap-2'>
+					<Button
+						onPress={handleGoToLogin}
+						className='w-1/2 items-center justify-center px-8 py-4 rounded-2xl'
+						style={{
+							backgroundColor: COLORS.primary[themeColorKey]
+						}}
+					>
+						<Text
+							size='lg'
+							weight='bold'
+							style={{
+								color: COLORS.text.onPrimary[themeColorKey]
+							}}
+						>
+							Войти
+						</Text>
+					</Button>
+
+					<ThemeButton onPress={handleOpenThemeModal} />
 				</View>
 
 				<RenderMenu />
 			</Scroll>
 
-			<Button
-				onPress={handleGoToLogin}
-				className='items-center justify-center px-8 py-4 rounded-2xl absolute bottom-4 left-4 right-4'
-				style={{
-					backgroundColor: COLORS.primary[themeColorKey]
-				}}
-			>
-				<Text
-					size='lg'
-					weight='bold'
-					style={{
-						color: COLORS.text.onPrimary[themeColorKey]
-					}}
-				>
-					Войти
-				</Text>
-			</Button>
+			<ThemeModal
+				visible={isThemeModalVisible}
+				onClose={handleCloseThemeModal}
+			/>
 		</Layout>
 	)
 }
