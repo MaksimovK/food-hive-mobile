@@ -2,6 +2,7 @@ import { ProfileHeader } from '@/components/elements'
 import Layout from '@/components/layout/Layout'
 import {
 	Button,
+	EditProfileModal,
 	IconButton,
 	Scroll,
 	Text,
@@ -70,6 +71,8 @@ export default function ProfileScreen() {
 	const { themeColorKey } = useThemeMode()
 	const { mutate: logout, isPending } = useLogoutMutation()
 	const [isThemeModalVisible, setIsThemeModalVisible] = useState(false)
+	const [isEditProfileModalVisible, setIsEditProfileModalVisible] =
+		useState(false)
 
 	const handleGoToLogin = useCallback(() => {
 		navigation.navigate('Auth')
@@ -85,6 +88,14 @@ export default function ProfileScreen() {
 
 	const handleCloseThemeModal = useCallback(() => {
 		setIsThemeModalVisible(false)
+	}, [])
+
+	const handleOpenEditProfileModal = useCallback(() => {
+		setIsEditProfileModalVisible(true)
+	}, [])
+
+	const handleCloseEditProfileModal = useCallback(() => {
+		setIsEditProfileModalVisible(false)
 	}, [])
 
 	if (user) {
@@ -126,6 +137,7 @@ export default function ProfileScreen() {
 						style={{
 							backgroundColor: COLORS.surface[themeColorKey]
 						}}
+						onPress={handleOpenEditProfileModal}
 					>
 						<View className='flex-row items-center gap-2 justify-between'>
 							<Text size='lg'>Изменить профиль</Text>
@@ -150,6 +162,17 @@ export default function ProfileScreen() {
 				<ThemeModal
 					visible={isThemeModalVisible}
 					onClose={handleCloseThemeModal}
+				/>
+
+				<EditProfileModal
+					visible={isEditProfileModalVisible}
+					onClose={handleCloseEditProfileModal}
+					user={{
+						email: user.email,
+						name: user.name,
+						phone: user.phone
+					}}
+					onSuccess={handleCloseEditProfileModal}
 				/>
 			</Layout>
 		)

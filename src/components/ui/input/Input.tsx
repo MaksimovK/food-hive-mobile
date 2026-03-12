@@ -9,6 +9,7 @@ export interface IInputProps extends TextInputProps {
 	label?: string
 	error?: string
 	containerClassName?: string
+	disabled?: boolean
 }
 
 export default function Input({
@@ -16,6 +17,7 @@ export default function Input({
 	error,
 	containerClassName,
 	className,
+	disabled,
 	...props
 }: IInputProps) {
 	const { themeColorKey } = useThemeMode()
@@ -35,18 +37,23 @@ export default function Input({
 			<TextInput
 				className={cn(`px-4 py-3 rounded-2xl text-base border`, className)}
 				style={{
-					backgroundColor: COLORS.surface[themeColorKey],
+					backgroundColor: disabled
+						? COLORS.disabled.background[themeColorKey]
+						: COLORS.surface[themeColorKey],
 					borderColor: error
 						? COLORS.error[themeColorKey]
 						: COLORS.border[themeColorKey],
-					color: error
-						? COLORS.error[themeColorKey]
-						: COLORS.text.primary[themeColorKey]
+					color: disabled
+						? COLORS.text.disabled[themeColorKey]
+						: error
+							? COLORS.error[themeColorKey]
+							: COLORS.text.primary[themeColorKey]
 				}}
 				placeholderTextColor={COLORS.text.disabled[themeColorKey]}
 				selectionColor={COLORS.primary[themeColorKey]}
 				autoCapitalize='none'
 				autoCorrect={false}
+				editable={!disabled}
 				{...props}
 			/>
 

@@ -14,7 +14,7 @@ import {
 export interface IModalProps extends ModalProps {
 	visible: boolean
 	onClose: () => void
-	title: string
+	title?: string
 	className?: string
 }
 
