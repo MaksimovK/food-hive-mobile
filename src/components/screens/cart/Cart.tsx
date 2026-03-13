@@ -8,7 +8,7 @@ import {
 	useCartTotalProducts,
 	useClearCart
 } from '@/store'
-import { Trash2 } from 'lucide-react-native'
+import { ShoppingCart, Trash2 } from 'lucide-react-native'
 import React from 'react'
 import { View } from 'react-native'
 
@@ -19,7 +19,13 @@ export default function CartScreen() {
 	const clearCart = useClearCart()
 
 	if (totalProducts === 0) {
-		return <Empty title='Корзина пуста' />
+		return (
+			<Empty
+				icon={ShoppingCart}
+				title='Корзина пуста'
+				description='Добавьте товары в корзину'
+			/>
+		)
 	}
 
 	return (

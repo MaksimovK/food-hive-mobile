@@ -3,7 +3,7 @@ import Layout from '@/components/layout/Layout'
 import { Grid, IconButton } from '@/components/ui'
 import { useClearFavorites, useFavorites } from '@/store'
 import { IProduct } from '@/types'
-import { Trash2 } from 'lucide-react-native'
+import { Heart, Trash2 } from 'lucide-react-native'
 import React, { useCallback } from 'react'
 import { View } from 'react-native'
 
@@ -17,7 +17,13 @@ export default function FavoriteScreen() {
 	)
 
 	if (favorites.length === 0) {
-		return <Empty title='Список избранного пуст' />
+		return (
+			<Empty
+				icon={Heart}
+				title='Список избранного пуст'
+				description='Добавьте товары в избранное'
+			/>
+		)
 	}
 
 	return (

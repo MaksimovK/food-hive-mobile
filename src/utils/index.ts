@@ -1,2 +1,2 @@
-export { formatPrice } from './formatPrice'
+export * from './formatters/format.utils'
 export { getFullImageUrl } from './image.util'

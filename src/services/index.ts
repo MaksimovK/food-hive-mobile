@@ -1,4 +1,5 @@
 export { authService } from './auth.service'
+export { addressService } from './address.service'
 export { cartService } from './cart.service'
 export { favoriteService } from './favorite.service'
 export { homeService } from './home.service'

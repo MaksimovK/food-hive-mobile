@@ -1,5 +1,6 @@
 export { useTypedNavigation } from './navigation/useTypedNavigation'
 export { useTypedRoute } from './navigation/useTypedRoute'
+export * from './queries/address.queries'
 export * from './queries/auth.queries'
 export { useFetchHome } from './queries/home.queries'
 export * from './queries/product.queries'

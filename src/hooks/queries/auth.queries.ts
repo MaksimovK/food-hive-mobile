@@ -2,14 +2,14 @@ import { errorCatch } from '@/api/error'
 import { toastError, toastSuccess } from '@/components/ui/toast/toast-show'
 import { authService } from '@/services'
 import { useLogout, useRefreshToken, useSetAuth } from '@/store'
-import { LoginRequest, RegisterRequest } from '@/types'
+import { ILoginRequest, IRegisterRequest } from '@/types'
 import { useMutation } from '@tanstack/react-query'
 
 export function useRegister() {
 	const setAuth = useSetAuth()
 
 	return useMutation({
-		mutationFn: (dto: RegisterRequest) => authService.register(dto),
+		mutationFn: (dto: IRegisterRequest) => authService.register(dto),
 		onSuccess: data => {
 			setAuth({
 				user: data.user,
@@ -28,7 +28,7 @@ export function useLogin() {
 	const setAuth = useSetAuth()
 
 	return useMutation({
-		mutationFn: (dto: LoginRequest) => authService.login(dto),
+		mutationFn: (dto: ILoginRequest) => authService.login(dto),
 		onSuccess: data => {
 			setAuth({
 				user: data.user,

@@ -1,32 +1,32 @@
 import { axiosClassic, axiosWithAuth } from '@/api/interceptor'
 import {
-	AuthResponse,
-	LoginRequest,
-	RefreshTokenResponse,
-	RegisterRequest
+	IAuthResponse,
+	ILoginRequest,
+	IRefreshTokenResponse,
+	IRegisterRequest
 } from '@/types'
 
 class AuthService {
 	private BASE_URL = '/auth'
 
-	async register(dto: RegisterRequest): Promise<AuthResponse> {
-		const response = await axiosClassic.post<AuthResponse>(
+	async register(dto: IRegisterRequest): Promise<IAuthResponse> {
+		const response = await axiosClassic.post<IAuthResponse>(
 			`${this.BASE_URL}/register`,
 			dto
 		)
 		return response.data
 	}
 
-	async login(dto: LoginRequest): Promise<AuthResponse> {
-		const response = await axiosClassic.post<AuthResponse>(
+	async login(dto: ILoginRequest): Promise<IAuthResponse> {
+		const response = await axiosClassic.post<IAuthResponse>(
 			`${this.BASE_URL}/login`,
 			dto
 		)
 		return response.data
 	}
 
-	async refreshToken(refreshToken: string): Promise<RefreshTokenResponse> {
-		const response = await axiosWithAuth.post<RefreshTokenResponse>(
+	async refreshToken(refreshToken: string): Promise<IRefreshTokenResponse> {
+		const response = await axiosWithAuth.post<IRefreshTokenResponse>(
 			`${this.BASE_URL}/refresh`,
 			{ refreshToken }
 		)
