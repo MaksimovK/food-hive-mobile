@@ -26,47 +26,54 @@ export default function Switch({
 	const dimensions = SIZE_MAP[size]
 
 	const handlePress = () => {
-		if (!disabled) {
+		if (!isDisabled) {
 			onValueChange(!value)
 		}
 	}
 
+	const isDisabled = !!disabled
+	const isActive = value
+
+	const backgroundColor = isActive
+		? COLORS.primary[themeColorKey]
+		: COLORS.border[themeColorKey]
+
+	const thumbBackgroundColor = COLORS.background[themeColorKey]
+	const opacity = isDisabled ? 0.5 : 1
+
 	const containerStyle: ViewStyle = {
 		width: dimensions.width,
 		height: dimensions.height,
-		borderRadius: dimensions.height / 2,
-		justifyContent: 'center',
-		paddingHorizontal: 4,
-		backgroundColor: value
-			? COLORS.primary[themeColorKey]
-			: COLORS.border[themeColorKey],
-		opacity: disabled ? 0.5 : 1
+		opacity
 	}
 
 	const thumbStyle: ViewStyle = {
 		width: dimensions.thumb,
 		height: dimensions.thumb,
-		borderRadius: dimensions.thumb / 2,
-		backgroundColor: COLORS.background[themeColorKey],
+		backgroundColor: thumbBackgroundColor,
 		transform: [
 			{
-				translateX: value ? dimensions.width - dimensions.thumb - 6 : 0
+				translateX: isActive ? dimensions.width - dimensions.thumb - 6 : 0
 			}
-		],
-		shadowColor: '#000',
-		shadowOffset: { width: 0, height: 1 },
-		shadowOpacity: 0.2,
-		shadowRadius: 2,
-		elevation: 2
+		]
 	}
 
 	return (
 		<TouchableWithoutFeedback
 			onPress={handlePress}
-			disabled={disabled}
+			disabled={isDisabled}
 		>
-			<View style={containerStyle}>
-				<View style={thumbStyle} />
+			<View
+				className={'justify-center px-1 rounded-full'}
+				style={{
+					...containerStyle,
+					backgroundColor
+				}}
+			>
+				<View
+					className='rounded-full shadow-sm'
+					style={thumbStyle}
+				/>
 			</View>
 		</TouchableWithoutFeedback>
 	)

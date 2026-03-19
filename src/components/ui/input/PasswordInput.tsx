@@ -27,6 +27,20 @@ export default function PasswordInput({
 		setIsPasswordVisible(prev => !prev)
 	}, [])
 
+	const isError = !!error
+
+	const textColor = isError
+		? COLORS.error[themeColorKey]
+		: COLORS.text.primary[themeColorKey]
+
+	const borderColor = isError
+		? COLORS.error[themeColorKey]
+		: COLORS.border[themeColorKey]
+
+	const iconColor = isError
+		? COLORS.error[themeColorKey]
+		: COLORS.text.secondary[themeColorKey]
+
 	return (
 		<View className={containerClassName}>
 			{label && (
@@ -41,20 +55,11 @@ export default function PasswordInput({
 
 			<View
 				className='flex-row items-center px-4 rounded-2xl border'
-				style={{
-					backgroundColor: COLORS.surface[themeColorKey],
-					borderColor: error
-						? COLORS.error[themeColorKey]
-						: COLORS.border[themeColorKey]
-				}}
+				style={{ backgroundColor: COLORS.surface[themeColorKey], borderColor }}
 			>
 				<TextInput
 					className={cn('flex-1 py-3 text-base', className)}
-					style={{
-						color: error
-							? COLORS.error[themeColorKey]
-							: COLORS.text.primary[themeColorKey]
-					}}
+					style={{ color: textColor }}
 					placeholderTextColor={COLORS.text.disabled[themeColorKey]}
 					selectionColor={COLORS.primary[themeColorKey]}
 					secureTextEntry={!isPasswordVisible}
@@ -69,15 +74,11 @@ export default function PasswordInput({
 					onPress={togglePasswordVisibility}
 					className='ml-2 p-1'
 					hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
-					iconColor={
-						error
-							? COLORS.error[themeColorKey]
-							: COLORS.text.secondary[themeColorKey]
-					}
+					iconColor={iconColor}
 				/>
 			</View>
 
-			{error && (
+			{isError && (
 				<Text
 					size='xs'
 					className='mt-1 ml-2'

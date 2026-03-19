@@ -1,4 +1,5 @@
 import {
+	DatePickerInput,
 	Input,
 	PasswordInput,
 	PhoneInput,
@@ -6,6 +7,7 @@ import {
 } from '@/components/ui'
 import { PASSWORD_REGEX, PHONE_REGEX } from '@/constants'
 import { useUpdateProfile } from '@/hooks'
+import { formatDate } from '@/utils'
 import { zodResolver } from '@hookform/resolvers/zod'
 import React, { useCallback, useEffect } from 'react'
 import { Controller, useForm } from 'react-hook-form'
@@ -24,6 +26,7 @@ const editProfileSchema = z
 			)
 			.optional()
 			.or(z.literal('')),
+		dateOfBirth: z.string(),
 		currentPassword: z.string(),
 		newPassword: z
 			.string()
@@ -57,6 +60,7 @@ export interface IEditProfileFormProps {
 		email: string
 		name: string | null
 		phone: string | null
+		dateOfBirth: string | null
 	}
 	onSuccess: () => void
 }
@@ -79,6 +83,7 @@ export default function EditProfileForm({
 			email: user.email,
 			name: user.name || '',
 			phone: user.phone || '',
+			dateOfBirth: user.dateOfBirth || '',
 			currentPassword: '',
 			newPassword: ''
 		}
@@ -89,6 +94,7 @@ export default function EditProfileForm({
 			email: user.email,
 			name: user.name || '',
 			phone: user.phone || '',
+			dateOfBirth: user.dateOfBirth || '',
 			currentPassword: '',
 			newPassword: ''
 		})
@@ -164,6 +170,14 @@ export default function EditProfileForm({
 						error={errors.phone?.message}
 					/>
 				)}
+			/>
+
+			<DatePickerInput
+				label='Дата рождения'
+				value={user.dateOfBirth ? formatDate(user.dateOfBirth) : ''}
+				onChangeText={() => {}}
+				disabled
+				placeholder='ДД-ММ-ГГГГ'
 			/>
 
 			<Controller

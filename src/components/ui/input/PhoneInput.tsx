@@ -79,6 +79,16 @@ export default function PhoneInput({
 	}
 	const displayValue = cleanDigits ? formatPhone(value) : ''
 
+	const isError = !!error
+
+	const textColor = isError
+		? COLORS.error[themeColorKey]
+		: COLORS.text.primary[themeColorKey]
+
+	const borderColor = isError
+		? COLORS.error[themeColorKey]
+		: COLORS.border[themeColorKey]
+
 	return (
 		<View className={containerClassName}>
 			{label && (
@@ -95,12 +105,8 @@ export default function PhoneInput({
 				className={cn(`px-4 py-3 rounded-2xl text-base border`, className)}
 				style={{
 					backgroundColor: COLORS.surface[themeColorKey],
-					borderColor: error
-						? COLORS.error[themeColorKey]
-						: COLORS.border[themeColorKey],
-					color: error
-						? COLORS.error[themeColorKey]
-						: COLORS.text.primary[themeColorKey]
+					borderColor,
+					color: textColor
 				}}
 				placeholder='+7 (___) ___ __-__'
 				placeholderTextColor={COLORS.text.disabled[themeColorKey]}
@@ -113,7 +119,7 @@ export default function PhoneInput({
 				{...props}
 			/>
 
-			{error && (
+			{isError && (
 				<Text
 					size='xs'
 					className='mt-1 ml-2'

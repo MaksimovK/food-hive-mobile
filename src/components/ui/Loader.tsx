@@ -10,18 +10,20 @@ interface ILoaderProps {
 export default function Loader({ isLoaderButton }: ILoaderProps) {
 	const { themeColorKey } = useThemeMode()
 
+	const loaderColor = isLoaderButton
+		? COLORS.background[themeColorKey]
+		: COLORS.primary[themeColorKey]
+
+	const backgroundColor = isLoaderButton
+		? 'transparent'
+		: COLORS.background[themeColorKey]
+
+	const flex = isLoaderButton ? undefined : 1
+
 	return (
 		<ActivityIndicator
-			color={
-				isLoaderButton
-					? COLORS.background[themeColorKey]
-					: COLORS.primary[themeColorKey]
-			}
-			style={
-				isLoaderButton
-					? { backgroundColor: 'transparent' }
-					: { backgroundColor: COLORS.background[themeColorKey], flex: 1 }
-			}
+			color={loaderColor}
+			style={{ backgroundColor, flex }}
 		/>
 	)
 }

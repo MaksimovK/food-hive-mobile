@@ -4,9 +4,10 @@ export type RoleType = 'user' | 'admin'
 
 export interface IUser extends IBase {
 	email: string
-	name: string | null
-	phone: string | null
+	name: string
+	phone: string
 	avatar: string | null
+	dateOfBirth: string
 	role: RoleType
 	createdAt: string
 }

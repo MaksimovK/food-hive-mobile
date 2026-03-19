@@ -22,6 +22,23 @@ export default function Input({
 }: IInputProps) {
 	const { themeColorKey } = useThemeMode()
 
+	const isError = !!error
+	const isDisabled = !!disabled
+
+	const textColor = isDisabled
+		? COLORS.text.disabled[themeColorKey]
+		: isError
+		? COLORS.error[themeColorKey]
+		: COLORS.text.primary[themeColorKey]
+
+	const borderColor = isError
+		? COLORS.error[themeColorKey]
+		: COLORS.border[themeColorKey]
+
+	const backgroundColor = isDisabled
+		? COLORS.disabled.background[themeColorKey]
+		: COLORS.surface[themeColorKey]
+
 	return (
 		<View className={containerClassName}>
 			{label && (
@@ -37,27 +54,19 @@ export default function Input({
 			<TextInput
 				className={cn(`px-4 py-3 rounded-2xl text-base border`, className)}
 				style={{
-					backgroundColor: disabled
-						? COLORS.disabled.background[themeColorKey]
-						: COLORS.surface[themeColorKey],
-					borderColor: error
-						? COLORS.error[themeColorKey]
-						: COLORS.border[themeColorKey],
-					color: disabled
-						? COLORS.text.disabled[themeColorKey]
-						: error
-							? COLORS.error[themeColorKey]
-							: COLORS.text.primary[themeColorKey]
+					backgroundColor,
+					borderColor,
+					color: textColor
 				}}
 				placeholderTextColor={COLORS.text.disabled[themeColorKey]}
 				selectionColor={COLORS.primary[themeColorKey]}
 				autoCapitalize='none'
 				autoCorrect={false}
-				editable={!disabled}
+				editable={!isDisabled}
 				{...props}
 			/>
 
-			{error && (
+			{isError && (
 				<Text
 					size='xs'
 					className='mt-1 ml-2'

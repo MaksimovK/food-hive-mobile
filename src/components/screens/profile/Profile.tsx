@@ -14,6 +14,7 @@ import { COLORS, DEFAULT_ICON_SIZE } from '@/constants'
 import { useLogoutMutation, useThemeMode, useTypedNavigation } from '@/hooks'
 import { ProfileStackParamList } from '@/navigation/stack/profile/ProfileStack'
 import { useUser } from '@/store'
+import { formatDate } from '@/utils'
 import cn from 'clsx'
 import { Edit2, LogOut } from 'lucide-react-native'
 import React, { useCallback, useState } from 'react'
@@ -153,6 +154,7 @@ export default function ProfileScreen() {
 							</Text>
 							<Text size='lg'>{user.email}</Text>
 							<Text size='lg'>{user.phone}</Text>
+							<Text size='lg'>{formatDate(user.dateOfBirth)}</Text>
 						</View>
 					</Button>
 
@@ -170,7 +172,8 @@ export default function ProfileScreen() {
 					user={{
 						email: user.email,
 						name: user.name,
-						phone: user.phone
+						phone: user.phone,
+						dateOfBirth: user.dateOfBirth
 					}}
 					onSuccess={handleCloseEditProfileModal}
 				/>

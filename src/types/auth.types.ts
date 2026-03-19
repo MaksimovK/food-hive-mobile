@@ -8,8 +8,9 @@ export interface ILoginRequest {
 export interface IRegisterRequest {
 	email: string
 	password: string
-	name?: string
-	phone?: string
+	name: string
+	phone: string
+	dateOfBirth: string
 }
 
 export interface IAuthResponse {

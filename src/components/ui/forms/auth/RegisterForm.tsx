@@ -1,12 +1,13 @@
 import { AuthToggle } from '@/components/elements'
 import {
+	DatePickerInput,
 	Input,
 	PasswordInput,
 	PhoneInput,
 	PrimaryButton,
 	Title
 } from '@/components/ui'
-import { PASSWORD_REGEX, PHONE_REGEX } from '@/constants'
+import { NAME_REGEX, PASSWORD_REGEX, PHONE_REGEX } from '@/constants'
 import { useRegister } from '@/hooks'
 import { zodResolver } from '@hookform/resolvers/zod'
 import React, { useCallback } from 'react'
@@ -23,12 +24,54 @@ const registerSchema = z.object({
 			PASSWORD_REGEX,
 			'Пароль должен содержать: заглавные буквы, строчные буквы, цифры и спецсимволы (@$!%*?&)'
 		),
-	name: z.string().min(2, 'Имя должно быть не менее 2 символов'),
+	name: z
+		.string()
+		.min(2, 'Имя должно быть не менее 2 символов')
+		.regex(NAME_REGEX, 'Имя может содержать только буквы, пробелы и дефисы'),
 	phone: z
 		.string()
 		.regex(PHONE_REGEX, 'Неверный формат телефона. Пример: +7 (999) 123 45-67')
-		.optional()
-		.or(z.literal(''))
+		.or(z.literal('')),
+	dateOfBirth: z
+		.string()
+		.regex(
+			/^\d{2}-\d{2}-\d{4}$/,
+			'Дата рождения должна быть в формате dd-mm-yyyy (например, 15-05-1990)'
+		)
+		.refine(
+			dateStr => {
+				if (!dateStr) return false
+				const [day, month, year] = dateStr.split('-').map(Number)
+				const date = new Date(Date.UTC(year, month - 1, day))
+				return (
+					date.getUTCFullYear() === year &&
+					date.getUTCMonth() === month - 1 &&
+					date.getUTCDate() === day
+				)
+			},
+			{
+				message: 'Некорректная дата'
+			}
+		)
+		.refine(
+			dateStr => {
+				if (!dateStr) return false
+				const [day, month, year] = dateStr.split('-').map(Number)
+				const date = new Date(Date.UTC(year, month - 1, day))
+				const today = new Date()
+				let age = today.getUTCFullYear() - date.getUTCFullYear()
+				const monthDiff = today.getUTCMonth() - date.getUTCMonth()
+				const dayDiff = today.getUTCDate() - date.getUTCDate()
+
+				if (monthDiff < 0 || (monthDiff === 0 && dayDiff < 0)) {
+					age--
+				}
+				return age >= 14
+			},
+			{
+				message: 'Вам должно быть не менее 14 лет'
+			}
+		)
 })
 
 type RegisterFormData = z.infer<typeof registerSchema>
@@ -55,7 +98,8 @@ export default function RegisterForm({
 			email: '',
 			password: '',
 			name: '',
-			phone: ''
+			phone: '',
+			dateOfBirth: ''
 		}
 	})
 
@@ -66,7 +110,8 @@ export default function RegisterForm({
 					email: data.email,
 					password: data.password,
 					name: data.name,
-					phone: data.phone || undefined
+					phone: data.phone,
+					dateOfBirth: data.dateOfBirth
 				},
 				{
 					onSuccess: () => {
@@ -131,10 +176,24 @@ export default function RegisterForm({
 
 			<Controller
 				control={control}
+				name='dateOfBirth'
+				render={({ field: { onChange, value } }) => (
+					<DatePickerInput
+						label='Дата рождения'
+						value={value}
+						onChangeText={onChange}
+						error={errors.dateOfBirth?.message}
+						placeholder='ДД-ММ-ГГГГ'
+					/>
+				)}
+			/>
+
+			<Controller
+				control={control}
 				name='phone'
 				render={({ field: { onChange, value } }) => (
 					<PhoneInput
-						label='Телефон (необязательно)'
+						label='Телефон'
 						value={value}
 						onChangeText={onChange}
 						error={errors.phone?.message}
