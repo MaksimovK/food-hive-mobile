@@ -1,5 +1,4 @@
 import { COLORS } from '@/constants/colors.constant'
-import { DEFAULT_ICON_SIZE } from '@/constants/component.constant'
 import { useThemeMode } from '@/hooks'
 import { useCartTotalProducts, useFavoriteTotal } from '@/store'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
@@ -28,7 +27,7 @@ export function TabNavigator() {
 	function renderIcon(Icon: LucideIcon, focused: boolean) {
 		return (
 			<Icon
-				size={DEFAULT_ICON_SIZE}
+				size={26}
 				color={
 					focused
 						? COLORS.nav.active[themeColorKey]

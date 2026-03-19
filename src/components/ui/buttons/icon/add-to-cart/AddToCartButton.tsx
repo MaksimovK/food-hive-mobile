@@ -9,12 +9,11 @@ import { ShoppingCart } from 'lucide-react-native'
 import React, { useCallback } from 'react'
 import { IIconButtonProps } from '../icon-button.interface'
 
-export interface IAddToCartButtonProps extends IIconButtonProps {
+export interface IAddToCartButtonProps extends Omit<IIconButtonProps, 'icon'> {
 	product: ICartProduct
 }
 
 export default function AddToCartButton({
-	icon = ShoppingCart,
 	className,
 	product,
 	...props
@@ -35,7 +34,7 @@ export default function AddToCartButton({
 		<IconButton
 			{...props}
 			className={cn(`px-4 py-2`, className)}
-			icon={icon}
+			icon={ShoppingCart}
 			text='В корзину'
 			style={{
 				backgroundColor: COLORS.primary[themeColorKey],

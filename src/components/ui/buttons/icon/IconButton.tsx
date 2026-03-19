@@ -15,7 +15,7 @@ export default function IconButton({
 	iconColor,
 	iconFill = 'none',
 	strokeWidth,
-	...rest
+	...props
 }: IIconButtonProps) {
 	const { themeColorKey } = useThemeMode()
 
@@ -23,7 +23,7 @@ export default function IconButton({
 
 	return (
 		<Button
-			{...rest}
+			{...props}
 			className={cn(
 				`${!text && 'w-8 h-8'}
 				rounded-full items-center justify-center`,

@@ -7,13 +7,12 @@ import { Heart } from 'lucide-react-native'
 import React, { useCallback } from 'react'
 import { IIconButtonProps } from '../icon-button.interface'
 
-export interface IFavoriteButtonProps extends IIconButtonProps {
+export interface IFavoriteButtonProps extends Omit<IIconButtonProps, 'icon'> {
 	iconSize?: number
 	product: IFavoriteProduct
 }
 
 export default function FavoriteButton({
-	icon = Heart,
 	iconSize,
 	className,
 	product,
@@ -33,7 +32,7 @@ export default function FavoriteButton({
 		<IconButton
 			{...props}
 			className={className}
-			icon={icon}
+			icon={Heart}
 			style={{
 				backgroundColor: COLORS.surfaceElevated[themeColorKey],
 				...props.style

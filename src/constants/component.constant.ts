@@ -4,3 +4,4 @@ export const DEFAULT_TOAST_VISIBLE_TIME = 3000
 export const SEARCH_DEBOUNCE = 300
 export const END_REACHED_THRESHOLD = 0.5
 export const PRODUCTS_PER_PAGE = 6
+export const SCROLL_THRESHOLD = 300

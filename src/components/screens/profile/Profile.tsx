@@ -110,7 +110,7 @@ export default function ProfileScreen() {
 							onPress={handleLogout}
 							disabled={isPending}
 							isLoading={isPending}
-							className='w-1/2 flex-row items-center justify-center gap-2 py-4 rounded-2xl'
+							className='w-[48%] flex-row items-center justify-center gap-2 py-4 rounded-2xl'
 							style={{
 								backgroundColor: COLORS.error[themeColorKey]
 							}}
@@ -120,7 +120,6 @@ export default function ProfileScreen() {
 								color={COLORS.text.onPrimary[themeColorKey]}
 							/>
 							<Text
-								size='base'
 								weight='semibold'
 								style={{
 									color: COLORS.text.onPrimary[themeColorKey]
@@ -130,7 +129,10 @@ export default function ProfileScreen() {
 							</Text>
 						</Button>
 
-						<ThemeButton onPress={handleOpenThemeModal} />
+						<ThemeButton
+							className='w-[48%]'
+							onPress={handleOpenThemeModal}
+						/>
 					</View>
 
 					<Button
@@ -189,14 +191,13 @@ export default function ProfileScreen() {
 				<View className='flex-row items-center justify-between gap-2'>
 					<Button
 						onPress={handleGoToLogin}
-						className='w-1/2 items-center justify-center px-8 py-4 rounded-2xl'
+						className='w-[48%] items-center justify-center px-8 py-4 rounded-2xl'
 						style={{
 							backgroundColor: COLORS.primary[themeColorKey]
 						}}
 					>
 						<Text
-							size='lg'
-							weight='bold'
+							weight='semibold'
 							style={{
 								color: COLORS.text.onPrimary[themeColorKey]
 							}}
@@ -205,7 +206,10 @@ export default function ProfileScreen() {
 						</Text>
 					</Button>
 
-					<ThemeButton onPress={handleOpenThemeModal} />
+					<ThemeButton
+						className='w-[48%]'
+						onPress={handleOpenThemeModal}
+					/>
 				</View>
 
 				<RenderMenu />

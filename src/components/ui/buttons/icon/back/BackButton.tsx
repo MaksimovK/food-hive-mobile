@@ -6,12 +6,11 @@ import { ArrowLeft } from 'lucide-react-native'
 import React, { useCallback } from 'react'
 import { IIconButtonProps } from '../icon-button.interface'
 
-export interface IBackButtonProps extends IIconButtonProps {
+export interface IBackButtonProps extends Omit<IIconButtonProps, 'icon'> {
 	backgroundColor?: string
 }
 
 export default function BackButton({
-	icon = ArrowLeft,
 	backgroundColor,
 	onPress,
 	className,
@@ -30,7 +29,7 @@ export default function BackButton({
 					backgroundColor || COLORS.surfaceElevated[themeColorKey],
 				...props.style
 			}}
-			icon={icon}
+			icon={ArrowLeft}
 			iconColor={COLORS.text.primary[themeColorKey]}
 			onPress={onPress || handleGoBack}
 		/>
