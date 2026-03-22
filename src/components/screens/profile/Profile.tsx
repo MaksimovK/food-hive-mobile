@@ -175,7 +175,8 @@ export default function ProfileScreen() {
 						email: user.email,
 						name: user.name,
 						phone: user.phone,
-						dateOfBirth: user.dateOfBirth
+						dateOfBirth: user.dateOfBirth,
+						avatar: user.avatar
 					}}
 					onSuccess={handleCloseEditProfileModal}
 				/>

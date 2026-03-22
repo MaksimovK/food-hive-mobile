@@ -30,6 +30,7 @@ export default function EditProfileModal({
 			visible={visible}
 			onClose={handleClose}
 			title='Редактирование профиля'
+			className='max-h-[85%]'
 		>
 			<EditProfileForm
 				user={user}

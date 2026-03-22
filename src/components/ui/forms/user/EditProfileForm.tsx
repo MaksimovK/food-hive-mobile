@@ -3,7 +3,8 @@ import {
 	Input,
 	PasswordInput,
 	PhoneInput,
-	PrimaryButton
+	PrimaryButton,
+	Scroll
 } from '@/components/ui'
 import { PASSWORD_REGEX, PHONE_REGEX } from '@/constants'
 import { useUpdateProfile } from '@/hooks'
@@ -11,8 +12,8 @@ import { formatDate } from '@/utils'
 import { zodResolver } from '@hookform/resolvers/zod'
 import React, { useCallback, useEffect } from 'react'
 import { Controller, useForm } from 'react-hook-form'
-import { View } from 'react-native'
 import { z } from 'zod'
+import AvatarPicker from './AvatarPicker'
 
 const editProfileSchema = z
 	.object({
@@ -61,6 +62,7 @@ export interface IEditProfileFormProps {
 		name: string | null
 		phone: string | null
 		dateOfBirth: string | null
+		avatar: string | null
 	}
 	onSuccess: () => void
 }
@@ -127,7 +129,12 @@ export default function EditProfileForm({
 	)
 
 	return (
-		<View className='flex-col gap-4 p-4'>
+		<Scroll
+			className='flex-col'
+			contentContainerClassName='p-4 gap-4'
+		>
+			<AvatarPicker currentAvatar={user.avatar} />
+
 			<Controller
 				control={control}
 				name='email'
@@ -216,6 +223,6 @@ export default function EditProfileForm({
 			>
 				Сохранить изменения
 			</PrimaryButton>
-		</View>
+		</Scroll>
 	)
 }

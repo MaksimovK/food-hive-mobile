@@ -17,13 +17,13 @@ export default function ProfileHeader({ user }: { user?: IUser }) {
 				{user?.avatar ? (
 					<Image
 						source={getFullImageUrl(user.avatar)}
-						className='w-10 h-10 rounded-2xl'
+						className='w-16 h-16 rounded-full'
 						resizeMode='cover'
 					/>
 				) : (
 					<IconButton
 						icon={CircleUserRound}
-						size={40}
+						size={48}
 					/>
 				)}
 			</View>

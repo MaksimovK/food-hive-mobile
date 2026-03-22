@@ -73,7 +73,7 @@ export default function HomeScreen() {
 
 			{showUpButton && (
 				<UpButton
-					className='absolute bottom-6 right-6 w-14 h-14'
+					className='absolute bottom-6 right-6 w-[40px] h-[40px]'
 					onPress={handleScrollToTop}
 				/>
 			)}

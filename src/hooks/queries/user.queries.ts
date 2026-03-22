@@ -19,3 +19,33 @@ export function useUpdateProfile() {
 		}
 	})
 }
+
+export function useUploadAvatar() {
+	const updateUser = useUpdateUser()
+
+	return useMutation({
+		mutationFn: (file: FormData) => userService.uploadAvatar(file),
+		onSuccess: data => {
+			updateUser(data)
+			toastSuccess('Аватарка загружена')
+		},
+		onError: error => {
+			toastError(errorCatch(error))
+		}
+	})
+}
+
+export function useRemoveAvatar() {
+	const updateUser = useUpdateUser()
+
+	return useMutation({
+		mutationFn: () => userService.removeAvatar(),
+		onSuccess: data => {
+			updateUser(data)
+			toastSuccess('Аватарка удалена')
+		},
+		onError: error => {
+			toastError(errorCatch(error))
+		}
+	})
+}
