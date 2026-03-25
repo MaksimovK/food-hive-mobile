@@ -65,7 +65,7 @@ export function useAddressSuggestions() {
 	const handleBlur = useCallback(() => {
 		setTimeout(() => {
 			setShowSuggestions(false)
-		}, 500)
+		}, 1000)
 	}, [])
 
 	const suggestions = suggestionsData?.suggestions || []
