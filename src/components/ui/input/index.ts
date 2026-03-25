@@ -1,3 +1,4 @@
+export { default as AddressInput } from './AddressInput'
 export { default as DatePickerInput } from './DatePickerInput'
 export { default as Input } from './Input'
 export { default as PasswordInput } from './PasswordInput'

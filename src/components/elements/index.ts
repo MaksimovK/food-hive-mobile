@@ -1,4 +1,4 @@
-export { default as AddressCard } from './address/AddressCard'
+export * from './address'
 export { default as AuthToggle } from './auth/AuthToggle'
 export { default as Banners } from './banners/Banners'
 export { default as CartInfoFooter } from './cart/CartInfoFooter'

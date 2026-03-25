@@ -1,4 +1,10 @@
-import { Input, PrimaryButton, Switch, Text } from '@/components/ui'
+import {
+	AddressInput,
+	Input,
+	PrimaryButton,
+	Switch,
+	Text
+} from '@/components/ui'
 import { useCreateAddress, useUpdateAddress } from '@/hooks'
 import { IAddress } from '@/types'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -18,7 +24,7 @@ const addressSchema = z.object({
 	isDefault: z.boolean().optional()
 })
 
-type AddressFormData = z.infer<typeof addressSchema>
+export type AddressFormData = z.infer<typeof addressSchema>
 
 export interface IAddAddressFormProps {
 	address?: IAddress
@@ -39,7 +45,8 @@ export default function AddAddressForm({
 		control,
 		handleSubmit,
 		formState: { errors },
-		reset
+		reset,
+		setValue
 	} = useForm<AddressFormData>({
 		resolver: zodResolver(addressSchema),
 		mode: 'onChange',
@@ -80,6 +87,18 @@ export default function AddAddressForm({
 			})
 		}
 	}, [address, reset])
+
+	const handleAddressSelect = useCallback(
+		(data: { street: string; house: string; flat?: string }) => {
+			if (data.house) {
+				setValue('house', data.house)
+			}
+			if (data.flat) {
+				setValue('apartment', data.flat)
+			}
+		},
+		[setValue]
+	)
 
 	const onSubmit = useCallback(
 		(data: AddressFormData) => {
@@ -128,21 +147,10 @@ export default function AddAddressForm({
 			/>
 
 			<View className='flex-row gap-2'>
-				<View className='flex-1'>
-					<Controller
-						control={control}
-						name='street'
-						render={({ field: { onChange, value } }) => (
-							<Input
-								label='Улица *'
-								placeholder='Улица'
-								value={value}
-								onChangeText={onChange}
-								error={errors.street?.message}
-							/>
-						)}
-					/>
-				</View>
+				<AddressInput
+					control={control}
+					onAddressSelect={handleAddressSelect}
+				/>
 
 				<View className='w-24'>
 					<Controller

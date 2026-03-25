@@ -131,7 +131,7 @@ export default function EditProfileForm({
 	return (
 		<Scroll
 			className='flex-col'
-			contentContainerClassName='p-4 gap-4'
+			contentContainerClassName='px-4 py-4 gap-4'
 		>
 			<AvatarPicker currentAvatar={user.avatar} />
 

@@ -1,4 +1,4 @@
-import { API_URL } from '@/config'
+import { API_URL, DADATA_API_TOKEN, DADATA_URL } from '@/config'
 import { authService } from '@/services'
 import { useAuthStore } from '@/store'
 import axios, { CreateAxiosDefaults } from 'axios'
@@ -8,6 +8,15 @@ export const options: CreateAxiosDefaults = {
 	baseURL: API_URL,
 	headers: {
 		'Content-Type': 'application/json'
+	},
+	withCredentials: true
+}
+
+export const daDataOptions: CreateAxiosDefaults = {
+	baseURL: DADATA_URL,
+	headers: {
+		'Content-Type': 'application/json',
+		Authorization: `Token ${DADATA_API_TOKEN}`
 	},
 	withCredentials: true
 }
@@ -74,4 +83,6 @@ axiosWithAuth.interceptors.response.use(
 	}
 )
 
-export { axiosClassic, axiosWithAuth }
+const axiosDaData = axios.create(daDataOptions)
+
+export { axiosClassic, axiosDaData, axiosWithAuth }

@@ -1,6 +1,7 @@
 export * from './address.types'
 export * from './auth.types'
 export * from './cart.types'
+export * from './dadata.types'
 export * from './favorite.types'
 export * from './home'
 export * from './product.types'
