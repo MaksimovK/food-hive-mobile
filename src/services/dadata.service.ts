@@ -2,8 +2,8 @@ import { axiosDaData } from '@/api/interceptor'
 import { IAddressResponse, IDaDataRequest } from '@/types'
 
 class DaDataService {
-	async getAddresses(params: IDaDataRequest) {
-		const response = await axiosDaData.post<IAddressResponse>('address', params)
+	async getAddresses(data: IDaDataRequest) {
+		const response = await axiosDaData.post<IAddressResponse>('address', data)
 		return response.data
 	}
 }

@@ -4,10 +4,10 @@ import { IUpdateProfileRequest, IUser } from '@/types'
 class UserService {
 	private BASE_URL = '/users'
 
-	async updateProfile(dto: IUpdateProfileRequest): Promise<IUser> {
+	async updateProfile(data: IUpdateProfileRequest): Promise<IUser> {
 		const response = await axiosWithAuth.patch<IUser>(
 			`${this.BASE_URL}/profile`,
-			dto
+			data
 		)
 		return response.data
 	}

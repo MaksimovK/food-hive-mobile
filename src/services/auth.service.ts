@@ -9,18 +9,18 @@ import {
 class AuthService {
 	private BASE_URL = '/auth'
 
-	async register(dto: IRegisterRequest): Promise<IAuthResponse> {
+	async register(data: IRegisterRequest): Promise<IAuthResponse> {
 		const response = await axiosClassic.post<IAuthResponse>(
 			`${this.BASE_URL}/register`,
-			dto
+			data
 		)
 		return response.data
 	}
 
-	async login(dto: ILoginRequest): Promise<IAuthResponse> {
+	async login(data: ILoginRequest): Promise<IAuthResponse> {
 		const response = await axiosClassic.post<IAuthResponse>(
 			`${this.BASE_URL}/login`,
-			dto
+			data
 		)
 		return response.data
 	}

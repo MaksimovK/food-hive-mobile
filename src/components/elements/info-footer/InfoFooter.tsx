@@ -1,19 +1,27 @@
 import { PrimaryButton, Text } from '@/components/ui'
 import { COLORS } from '@/constants'
 import { useThemeMode } from '@/hooks'
+import { useIsAuthenticated } from '@/store'
 import { formatPrice } from '@/utils'
 import React from 'react'
 import { View } from 'react-native'
 
-interface CartInfoFooterProps {
+export interface IInfoFooterProps {
 	totalProducts: number
 	totalPrice: number
+	onPress?: () => void
+	disabled?: boolean
+	isLoading?: boolean
 }
 
-export default function CartInfoFooter({
+export default function InfoFooter({
 	totalProducts,
-	totalPrice
-}: CartInfoFooterProps) {
+	totalPrice,
+	onPress,
+	isLoading,
+	disabled = false
+}: IInfoFooterProps) {
+	const isAuth = useIsAuthenticated()
 	const { themeColorKey } = useThemeMode()
 
 	return (
@@ -24,11 +32,10 @@ export default function CartInfoFooter({
 				borderColor: COLORS.border[themeColorKey]
 			}}
 		>
-			<View className='flex-row items-center justify-between'>
+			<View className='flex-row items-center justify-between mb-4'>
 				<Text
 					size='lg'
 					weight='bold'
-					className='mb-2'
 				>
 					Товаров: {totalProducts}
 				</Text>
@@ -36,13 +43,19 @@ export default function CartInfoFooter({
 				<Text
 					size='lg'
 					weight='bold'
-					className='mb-2'
 				>
 					{formatPrice(totalPrice)}
 				</Text>
 			</View>
 
-			<PrimaryButton>Оформить заказ</PrimaryButton>
+			<PrimaryButton
+				onPress={onPress}
+				isLoading={isLoading}
+				disabled={!isAuth || disabled}
+				state={disabled ? 'disable' : 'default'}
+			>
+				{isAuth ? 'Оформить заказ' : 'Войдите, чтобы оформить заказ'}
+			</PrimaryButton>
 		</View>
 	)
 }

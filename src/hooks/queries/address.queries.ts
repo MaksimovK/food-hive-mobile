@@ -15,9 +15,10 @@ export function useCreateAddress() {
 	const queryClient = useQueryClient()
 
 	return useMutation({
-		mutationFn: (dto: ICreateAddressRequest) => addressService.create(dto),
+		mutationFn: (data: ICreateAddressRequest) => addressService.create(data),
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: ['addresses'] })
+			queryClient.invalidateQueries({ queryKey: ['checkout-data'] })
 			toastSuccess('Адрес добавлен')
 		},
 		onError: error => {
@@ -30,8 +31,8 @@ export function useUpdateAddress() {
 	const queryClient = useQueryClient()
 
 	return useMutation({
-		mutationFn: ({ id, dto }: { id: string; dto: IUpdateAddressRequest }) =>
-			addressService.update(id, dto),
+		mutationFn: ({ id, data }: { id: string; data: IUpdateAddressRequest }) =>
+			addressService.update(id, data),
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: ['addresses'] })
 			toastSuccess('Адрес обновлён')

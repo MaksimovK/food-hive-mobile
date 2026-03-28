@@ -4,6 +4,7 @@ export * from './input'
 export * from './modals'
 export * from './toast'
 
+export { default as Container } from './Container'
 export { default as Grid } from './Grid'
 export { default as Loader } from './Loader'
 export { default as Scroll } from './Scroll'

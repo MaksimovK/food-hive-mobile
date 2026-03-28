@@ -9,15 +9,15 @@ class AddressService {
 		return response.data
 	}
 
-	async create(dto: ICreateAddressRequest) {
-		const response = await axiosWithAuth.post<IAddress>(this.BASE_URL, dto)
+	async create(data: ICreateAddressRequest) {
+		const response = await axiosWithAuth.post<IAddress>(this.BASE_URL, data)
 		return response.data
 	}
 
-	async update(id: string, dto: IUpdateAddressRequest) {
+	async update(id: string, data: IUpdateAddressRequest) {
 		const response = await axiosWithAuth.patch<IAddress>(
 			`${this.BASE_URL}/${id}`,
-			dto
+			data
 		)
 		return response.data
 	}

@@ -5,7 +5,7 @@ class CartService {
 	private BASE_URL = '/cart'
 
 	async getCart() {
-		const response = await axiosWithAuth.get<ICartResponse>(`${this.BASE_URL}`)
+		const response = await axiosWithAuth.get<ICartResponse>(this.BASE_URL)
 		return response.data
 	}
 

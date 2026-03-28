@@ -9,7 +9,8 @@ export function useUpdateProfile() {
 	const updateUser = useUpdateUser()
 
 	return useMutation({
-		mutationFn: (dto: IUpdateProfileRequest) => userService.updateProfile(dto),
+		mutationFn: (data: IUpdateProfileRequest) =>
+			userService.updateProfile(data),
 		onSuccess: data => {
 			updateUser(data)
 			toastSuccess('Профиль обновлён')

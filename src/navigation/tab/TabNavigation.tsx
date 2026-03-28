@@ -44,7 +44,7 @@ export function TabNavigator() {
 				headerShown: false,
 				tabBarPosition: 'bottom',
 				tabBarStyle: {
-					height: 60,
+					height: 70,
 					paddingHorizontal: 12,
 					paddingTop: 12,
 					paddingBottom: 12,

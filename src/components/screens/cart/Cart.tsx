@@ -1,7 +1,8 @@
-import { Empty, ProductCard } from '@/components/elements'
-import CartInfoFooter from '@/components/elements/cart/CartInfoFooter'
+import { Empty, InfoFooter, ProductCard } from '@/components/elements'
 import Layout from '@/components/layout/Layout'
 import { IconButton, Scroll, Separator } from '@/components/ui'
+import { useTypedNavigation } from '@/hooks'
+import { CartStackParamList } from '@/navigation/stack/cart/CartStack'
 import {
 	useCartItems,
 	useCartTotalPrice,
@@ -9,14 +10,20 @@ import {
 	useClearCart
 } from '@/store'
 import { ShoppingCart, Trash2 } from 'lucide-react-native'
-import React from 'react'
+import React, { useCallback } from 'react'
 import { View } from 'react-native'
 
 export default function CartScreen() {
+	const navigation = useTypedNavigation<CartStackParamList>()
 	const products = useCartItems()
 	const totalProducts = useCartTotalProducts()
 	const totalPrice = useCartTotalPrice()
 	const clearCart = useClearCart()
+
+	const handleGoToCheckout = useCallback(
+		() => navigation.navigate('Order'),
+		[navigation]
+	)
 
 	if (totalProducts === 0) {
 		return (
@@ -57,9 +64,10 @@ export default function CartScreen() {
 				<View className='h-28' />
 			</Scroll>
 
-			<CartInfoFooter
+			<InfoFooter
 				totalProducts={totalProducts}
 				totalPrice={totalPrice}
+				onPress={handleGoToCheckout}
 			/>
 		</Layout>
 	)

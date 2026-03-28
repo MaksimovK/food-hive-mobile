@@ -9,7 +9,7 @@ export function useRegister() {
 	const setAuth = useSetAuth()
 
 	return useMutation({
-		mutationFn: (dto: IRegisterRequest) => authService.register(dto),
+		mutationFn: (data: IRegisterRequest) => authService.register(data),
 		onSuccess: data => {
 			setAuth({
 				user: data.user,
@@ -28,7 +28,7 @@ export function useLogin() {
 	const setAuth = useSetAuth()
 
 	return useMutation({
-		mutationFn: (dto: ILoginRequest) => authService.login(dto),
+		mutationFn: (data: ILoginRequest) => authService.login(data),
 		onSuccess: data => {
 			setAuth({
 				user: data.user,

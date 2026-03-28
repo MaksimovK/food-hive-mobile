@@ -5,9 +5,7 @@ class FavoriteService {
 	private BASE_URL = '/favorites'
 
 	async findAll() {
-		const response = await axiosWithAuth.get<IFavoriteProduct[]>(
-			`${this.BASE_URL}`
-		)
+		const response = await axiosWithAuth.get<IFavoriteProduct[]>(this.BASE_URL)
 		return response.data
 	}
 

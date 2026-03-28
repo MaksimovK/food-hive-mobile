@@ -5,7 +5,7 @@ class HomeService {
 	private BASE_URL = '/home'
 
 	async getHome() {
-		const response = await axiosClassic.get<IHomeResponse>(`${this.BASE_URL}`)
+		const response = await axiosClassic.get<IHomeResponse>(this.BASE_URL)
 		return response.data
 	}
 }

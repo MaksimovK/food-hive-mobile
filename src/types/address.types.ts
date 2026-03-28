@@ -9,8 +9,6 @@ export interface IAddress extends IBase {
 	floor: string | null
 	comment: string | null
 	isDefault: boolean
-	createdAt: string
-	updatedAt: string
 }
 
 export interface ICreateAddressRequest {
