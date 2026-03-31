@@ -1,8 +1,20 @@
-import { Empty, ProductElement } from '@/components/elements'
+import { Empty, OrderStatusLabel, ProductElement } from '@/components/elements'
 import Layout from '@/components/layout/Layout'
-import { BackButton, Loader, Scroll, Separator, Text } from '@/components/ui'
-import { COLORS, getStatusColors, statusLabels } from '@/constants'
-import { useOrderById, useThemeMode, useTypedRoute } from '@/hooks'
+import {
+	BackButton,
+	Button,
+	Loader,
+	Scroll,
+	Separator,
+	Text
+} from '@/components/ui'
+import { COLORS } from '@/constants'
+import {
+	useOrderById,
+	useRepeatOrder,
+	useThemeMode,
+	useTypedRoute
+} from '@/hooks'
 import { EnumPaymentMethod } from '@/types'
 import {
 	formatAddress,
@@ -11,7 +23,14 @@ import {
 	numberPostfixFormat,
 	orderItemToProductDisplay
 } from '@/utils'
-import { Clock, CreditCard, MapPin, Package, User } from 'lucide-react-native'
+import {
+	Clock,
+	CreditCard,
+	MapPin,
+	Package,
+	Repeat,
+	User
+} from 'lucide-react-native'
 import React, { useMemo } from 'react'
 import { View } from 'react-native'
 
@@ -26,8 +45,7 @@ export default function OrderDetailsScreen() {
 
 	const { themeColorKey } = useThemeMode()
 	const { data: order, isLoading } = useOrderById(orderId)
-
-	const statusColors = order && getStatusColors(order.status, themeColorKey)
+	const { mutate: repeat, isPending } = useRepeatOrder(orderId)
 
 	const formattedAddress = useMemo(() => {
 		if (!order) return ''
@@ -39,6 +57,10 @@ export default function OrderDetailsScreen() {
 			floor: order.deliveryFloor
 		})
 	}, [order])
+
+	const handlePressRepeat = () => {
+		repeat()
+	}
 
 	if (isLoading) return <Loader />
 
@@ -57,21 +79,23 @@ export default function OrderDetailsScreen() {
 					<View className='flex-row items-center justify-between'>
 						<BackButton />
 
-						<View
-							className='px-4 py-3 rounded-2xl border self-start'
-							style={{
-								backgroundColor: statusColors?.background,
-								borderColor: statusColors?.border
-							}}
+						<Button
+							className='flex-row items-center gap-2'
+							onPress={handlePressRepeat}
+							isLoading={isPending}
 						>
-							<Text
-								size='sm'
-								weight='medium'
-								style={{ color: statusColors?.text }}
-							>
-								{statusLabels[order.status]}
+							<Repeat
+								size={20}
+								color={COLORS.primary[themeColorKey]}
+							/>
+							<Text style={{ color: COLORS.primary[themeColorKey] }}>
+								Повторить
 							</Text>
-						</View>
+						</Button>
+					</View>
+
+					<View className='items-start'>
+						<OrderStatusLabel status={order.status} />
 					</View>
 
 					<View className='flex-row flex-wrap gap-4 justify-between'>

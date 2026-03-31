@@ -1,8 +1,8 @@
 import { errorCatch } from '@/api/error'
 import { toastError, toastSuccess } from '@/components/ui'
 import { orderService } from '@/services'
-import { useClearCart } from '@/store'
-import { ICreateOrderRequest, IGetOrdersRequest } from '@/types'
+import { useClearCart, useSetCart } from '@/store'
+import { ICartResponse, ICreateOrderRequest, IGetOrdersRequest } from '@/types'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 
 export function useCheckoutData() {
@@ -42,5 +42,22 @@ export function useOrderById(id: string) {
 		queryKey: ['order', id],
 		queryFn: () => orderService.getOrderById(id),
 		enabled: !!id
+	})
+}
+
+export function useRepeatOrder(id: string) {
+	const clear = useClearCart()
+	const setCart = useSetCart()
+
+	return useMutation({
+		mutationFn: () => orderService.repeatOrder(id),
+		onSuccess: (response: ICartResponse) => {
+			clear()
+			setCart(response)
+			toastSuccess('Товары добавлены в корзину')
+		},
+		onError: error => {
+			toastError(`Ошибка: ${errorCatch(error)}`)
+		}
 	})
 }

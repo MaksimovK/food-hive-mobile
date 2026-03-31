@@ -1,10 +1,5 @@
 import { Button, Text } from '@/components/ui'
-import {
-	COLORS,
-	DEFAULT_ICON_SIZE,
-	getStatusColors,
-	statusLabels
-} from '@/constants'
+import { COLORS, DEFAULT_ICON_SIZE } from '@/constants'
 import { useThemeMode } from '@/hooks'
 import { IOrder } from '@/types'
 import {
@@ -17,6 +12,7 @@ import {
 import { ChevronRight, Package } from 'lucide-react-native'
 import React, { useMemo } from 'react'
 import { Image, View } from 'react-native'
+import OrderStatusLabel from './OrderStatusLabel'
 
 export interface IOrderHistoryCardProps {
 	order: IOrder
@@ -28,8 +24,6 @@ export default function OrderHistoryCard({
 	onPress
 }: IOrderHistoryCardProps) {
 	const { themeColorKey } = useThemeMode()
-
-	const statusColors = order && getStatusColors(order.status, themeColorKey)
 
 	const firstProductImage = order.orderItems[0]?.product?.image
 
@@ -73,21 +67,7 @@ export default function OrderHistoryCard({
 					{formatDate(order.createdAt)}
 				</Text>
 
-				<View
-					className='px-3 py-1.5 rounded-2xl border'
-					style={{
-						backgroundColor: statusColors.background,
-						borderColor: statusColors.border
-					}}
-				>
-					<Text
-						size='sm'
-						weight='medium'
-						style={{ color: statusColors.text }}
-					>
-						{statusLabels[order.status]}
-					</Text>
-				</View>
+				<OrderStatusLabel status={order.status} />
 			</View>
 
 			<View className='flex-row gap-3 items-center'>

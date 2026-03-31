@@ -1,5 +1,6 @@
 import { axiosWithAuth } from '@/api/interceptor'
 import {
+	ICartResponse,
 	ICheckoutDataResponse,
 	ICreateOrderRequest,
 	IGetOrdersRequest,
@@ -30,6 +31,13 @@ class OrderService {
 
 	async getOrderById(id: string) {
 		const response = await axiosWithAuth.get<IOrder>(`${this.BASE_URL}/${id}`)
+		return response.data
+	}
+
+	async repeatOrder(id: string) {
+		const response = await axiosWithAuth.post<ICartResponse>(
+			`${this.BASE_URL}/${id}/repeat`
+		)
 		return response.data
 	}
 }
