@@ -112,7 +112,7 @@ export default function AddAddressForm({
 
 			if (isEditing && address) {
 				updateAddress(
-					{ id: address.id, dto: submitData },
+					{ id: address.id, data: submitData },
 					{
 						onSuccess: () => {
 							onSuccess()

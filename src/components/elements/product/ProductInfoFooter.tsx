@@ -1,7 +1,7 @@
 import { AddToCartButton, Title } from '@/components/ui'
 import { COLORS } from '@/constants'
 import { useThemeMode } from '@/hooks'
-import { IProduct } from '@/types'
+import { ICartProduct, IProduct } from '@/types'
 import { formatPrice } from '@/utils'
 import React from 'react'
 import { View } from 'react-native'
@@ -17,6 +17,17 @@ export default function ProductInfoFooter({
 }: ProductInfoFooterProps) {
 	const { themeColorKey } = useThemeMode()
 
+	const cartProduct: ICartProduct = {
+		id: product.id,
+		name: product.name,
+		image: product.image,
+		price: product.price,
+		unit: product.unit,
+		servingSize: product.servingSize,
+		quantity: 1,
+		itemTotal: totalPrice
+	}
+
 	return (
 		<View
 			className='absolute bottom-0 left-0 right-0 px-4 py-5 rounded-t-2xl border-t border-x'
@@ -30,7 +41,7 @@ export default function ProductInfoFooter({
 					<Title title={formatPrice(totalPrice)} />
 				</View>
 
-				<AddToCartButton product={product} />
+				<AddToCartButton product={cartProduct} />
 			</View>
 		</View>
 	)

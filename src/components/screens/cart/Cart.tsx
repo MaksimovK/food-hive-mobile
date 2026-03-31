@@ -2,7 +2,6 @@ import { Empty, InfoFooter, ProductCard } from '@/components/elements'
 import Layout from '@/components/layout/Layout'
 import { IconButton, Scroll, Separator } from '@/components/ui'
 import { useTypedNavigation } from '@/hooks'
-import { CartStackParamList } from '@/navigation/stack/cart/CartStack'
 import {
 	useCartItems,
 	useCartTotalPrice,
@@ -14,7 +13,7 @@ import React, { useCallback } from 'react'
 import { View } from 'react-native'
 
 export default function CartScreen() {
-	const navigation = useTypedNavigation<CartStackParamList>()
+	const navigation = useTypedNavigation()
 	const products = useCartItems()
 	const totalProducts = useCartTotalProducts()
 	const totalPrice = useCartTotalPrice()

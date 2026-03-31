@@ -22,7 +22,7 @@ import { View, ViewProps } from 'react-native'
 import { profileMenu } from './profile-menu.data'
 
 function RenderMenu({ className, ...props }: ViewProps) {
-	const navigation = useTypedNavigation<ProfileStackParamList>()
+	const navigation = useTypedNavigation()
 	const { themeColorKey } = useThemeMode()
 	const user = useUser()
 
@@ -33,7 +33,7 @@ function RenderMenu({ className, ...props }: ViewProps) {
 				return
 			}
 
-			navigation.navigate(page)
+			navigation.navigate(page as any)
 		},
 		[navigation, user]
 	)

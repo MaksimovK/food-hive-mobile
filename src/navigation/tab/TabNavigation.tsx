@@ -30,7 +30,7 @@ export function TabNavigator() {
 				size={26}
 				color={
 					focused
-						? COLORS.nav.active[themeColorKey]
+						? COLORS.primary[themeColorKey]
 						: COLORS.nav.inactive[themeColorKey]
 				}
 			/>
