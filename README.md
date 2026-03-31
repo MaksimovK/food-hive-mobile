@@ -1,97 +1,411 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+# Food Hive App 📱
 
-# Getting Started
+Мобильное приложение для доставки еды — клиентская часть сервиса Food Hive. Современный интерфейс, офлайн-режим и бесшовная синхронизация с сервером.
 
-> **Note**: Make sure you have completed the [Set Up Your Environment](https://reactnative.dev/docs/set-up-your-environment) guide before proceeding.
+[![React Native](https://img.shields.io/badge/React_Native-0.84-blue?logo=react&logoColor=white)](https://reactnative.dev/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5-blue?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![NativeWind](https://img.shields.io/badge/NativeWind-4-cyan?logo=tailwindcss&logoColor=white)](https://www.nativewind.dev/)
+[![Zustand](https://img.shields.io/badge/Zustand-5-orange)](https://zustand-demo.pmnd.rs/)
+[![React Query](https://img.shields.io/badge/React_Query-5-ff69b4?logo=reactquery&logoColor=white)](https://tanstack.com/query)
 
-## Step 1: Start Metro
+---
 
-First, you will need to run **Metro**, the JavaScript build tool for React Native.
+## 📋 Содержание
 
-To start the Metro dev server, run the following command from the root of your React Native project:
+- [О проекте](#-о-проекте)
+- [Возможности](#-возможности)
+- [Технологический стек](#-технологический-стек)
+- [Архитектура приложения](#-архитектура-приложения)
+- [Быстрый старт](#-быстрый-старт)
+- [Структура проекта](#-структура-проекта)
+- [Основные функции](#-основные-функции)
+- [Безопасность](#-безопасность)
+- [Контакты](#-контакты)
 
-```sh
-# Using npm
+---
+
+## 🍽️ О проекте
+
+**Food Hive App** — это кроссплатформенное мобильное приложение для заказа еды, разработанное на React Native. Приложение демонстрирует современные подходы к мобильной разработке: типобезопасность, оптимистичные обновления и бесшовную синхронизацию с сервером.
+
+Проект создан для портфолио и демонстрирует навыки frontend/mobile-разработки.
+
+**Связанные проекты:**
+- [Food Hive API](https://github.com/MaksimovK/food-hive-server) — серверная часть
+
+---
+
+## ✨ Возможности
+
+### 🏠 Главная страница
+- Баннеры с акциями и специальными предложениями
+- Категории продуктов с быстрым переходом
+- Товары по категориям с возможностью добавления в корзину
+
+### 🔍 Поиск
+- Поиск продуктов с debounce
+- Бесконечная прокрутка результатов
+- Фильтрация по категориям
+
+### 🛒 Корзина
+- Добавление товаров с выбором количества
+- Управление количеством в корзине
+- Офлайн-режим с последующей синхронизацией
+- Оформление заказа с выбором адреса и оплаты
+- Быстрая очистка списка
+
+### ❤️ Избранное
+- Добавление/удаление товаров в избранное
+- Синхронизация с сервером
+- Быстрая очистка списка
+
+### 📦 Заказы
+- Оформление заказа с выбором адреса доставки
+- Выбор способа оплаты (карта/наличные)
+- История заказов со статусами
+- Повтор предыдущих заказов
+
+### 👤 Профиль
+- Редактирование профиля
+- Загрузка аватара
+- Управление адресами доставки
+- История заказов
+- Настройки темы
+
+### 🎨 Темы
+- Светлая тема
+- Тёмная тема
+- Системная (автоматически)
+
+---
+
+## 🛠️ Технологический стек
+
+| Категория | Технологии |
+|-----------|------------|
+| **Фреймворк** | React Native 0.84 |
+| **Язык** | TypeScript 5 |
+| **Стили** | NativeWind (Tailwind CSS) |
+| **Навигация** | React Navigation 7 |
+| **State** | Zustand |
+| **Data Fetching** | TanStack Query 5 |
+| **HTTP** | Axios |
+| **Формы** | React Hook Form + Zod |
+| **Иконки** | Lucide React Native |
+| **Анимации** | react-native-reanimated |
+| **Хранение** | AsyncStorage, EncryptedStorage |
+| **Тосты** | react-native-toast-message |
+
+---
+
+## 🏗️ Архитектура приложения
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│                        App.tsx                                  │
+│                    (Navigation + Providers)                     │
+└─────────────────────────────────────────────────────────────────┘
+                              │
+        ┌─────────────────────┼─────────────────────┐
+        │                     │                     │
+        ▼                     ▼                     ▼
+┌──────────────────┐ ┌──────────────────┐ ┌──────────────────┐
+│  QueryClient     │ │   ThemeProvider  │ │  NetworkProvider │
+│  (React Query)   │ │   (light/dark)   │ │  (offline check) │
+└──────────────────┘ └──────────────────┘ └──────────────────┘
+                              │
+        ┌─────────────────────┼─────────────────────┐
+        │                     │                     │
+        ▼                     ▼                     ▼
+┌──────────────────┐ ┌──────────────────┐ ┌──────────────────┐
+│   Auth Store     │ │   Cart Store     │ │ Favorites Store  │
+│   (Zustand)      │ │   (Zustand)      │ │   (Zustand)      │
+│   + Encrypted    │ │   + Sync         │ │   + Sync         │
+└──────────────────┘ └──────────────────┘ └──────────────────┘
+                              │
+                              ▼
+┌─────────────────────────────────────────────────────────────────┐
+│                    Navigation Stack                             │
+│  MainTabs → Home/Search/Favorites/Cart/Profile                  │
+│  + ProductInfo, Auth, Order, OrderHistory, Address              │
+└─────────────────────────────────────────────────────────────────┘
+                              │
+                              ▼
+┌─────────────────────────────────────────────────────────────────┐
+│                      Screens + Components                       │
+│  (UI Components, Elements, Layout, Forms)                       │
+└─────────────────────────────────────────────────────────────────┘
+                              │
+                              ▼
+┌─────────────────────────────────────────────────────────────────┐
+│                    API Layer (Axios)                            │
+│  Services → Interceptors → Backend                              │
+│  (auto refresh JWT, error handling)                             │
+└─────────────────────────────────────────────────────────────────┘
+```
+
+---
+
+## 🚀 Быстрый старт
+
+### Требования
+
+- Node.js 22.11+
+- npm / bun
+- Android Studio (для Android)
+- Xcode (для iOS, macOS)
+- CocoaPods (для iOS)
+
+### Установка
+
+1. **Клонируйте репозиторий**
+```bash
+git clone https://github.com/MaksimovK/food-hive-mobile.git
+cd food-hive/foodhive
+```
+
+2. **Установите зависимости**
+```bash
+npm install
+# или
+bun install
+```
+
+3. **Настройте переменные окружения**
+
+Создайте файл `.env` в корне проекта:
+
+```env
+SERVER_URL=http://localhost:4200
+DADATA_URL=https://suggestions.dadata.ru/suggestions/api/4_1/rs/suggest/
+DADATA_API_TOKEN=your_dadata_api_token
+```
+
+4. **iOS: установите CocoaPods зависимости**
+```bash
+cd ios
+bundle install
+bundle exec pod install
+cd ..
+```
+
+5. **Запуск приложения**
+
+```bash
+# Запуск Metro bundler
 npm start
 
-# OR using Yarn
-yarn start
-```
-
-## Step 2: Build and run your app
-
-With Metro running, open a new terminal window/pane from the root of your React Native project, and use one of the following commands to build and run your Android or iOS app:
-
-### Android
-
-```sh
-# Using npm
+# Android
 npm run android
 
-# OR using Yarn
-yarn android
-```
-
-### iOS
-
-For iOS, remember to install CocoaPods dependencies (this only needs to be run on first clone or after updating native deps).
-
-The first time you create a new project, run the Ruby bundler to install CocoaPods itself:
-
-```sh
-bundle install
-```
-
-Then, and every time you update your native dependencies, run:
-
-```sh
-bundle exec pod install
-```
-
-For more information, please visit [CocoaPods Getting Started guide](https://guides.cocoapods.org/using/getting-started.html).
-
-```sh
-# Using npm
+# iOS
 npm run ios
-
-# OR using Yarn
-yarn ios
 ```
 
-If everything is set up correctly, you should see your new app running in the Android Emulator, iOS Simulator, or your connected device.
+---
 
-This is one way to run your app — you can also build it directly from Android Studio or Xcode.
+## 📁 Структура проекта
 
-## Step 3: Modify your app
+```
+foodhive/
+├── src/
+│   ├── api/                    # Axios интерсепторы
+│   │   ├── error.ts            # Обработка ошибок
+│   │   └── interceptor.ts      # JWT refresh логика
+│   │
+│   ├── assets/                 # Изображения, ресурсы
+│   │   └── images/
+│   │       └── logo.png
+│   │
+│   ├── components/
+│   │   ├── elements/           # Составные элементы
+│   │   │   ├── address/        # AddressCard, AddressSuggestions
+│   │   │   ├── auth/           # AuthToggle
+│   │   │   ├── banners/        # Banners
+│   │   │   ├── categories/     # Categories
+│   │   │   ├── order/          # Order элементы
+│   │   │   ├── product/        # ProductInfo, Nutrition
+│   │   │   ├── product-card/   # Карточки товаров
+│   │   │   └── profile/        # ProfileHeader
+│   │   │
+│   │   ├── layout/             # Layout компоненты
+│   │   │   └── Layout.tsx
+│   │   │
+│   │   ├── screens/            # Экраны приложения
+│   │   │   ├── about/
+│   │   │   ├── address/
+│   │   │   ├── auth/
+│   │   │   ├── cart/
+│   │   │   ├── favorite/
+│   │   │   ├── home/
+│   │   │   ├── order/
+│   │   │   ├── order-details/
+│   │   │   ├── order-history/
+│   │   │   ├── product-info/
+│   │   │   ├── profile/
+│   │   │   └── search/
+│   │   │
+│   │   └── ui/                 # Базовые UI компоненты
+│   │       ├── buttons/        # Button, PrimaryButton, IconButton
+│   │       ├── forms/          # LoginForm, RegisterForm
+│   │       ├── input/          # Input, PhoneInput, DatePicker
+│   │       ├── modals/         # Modal, ThemeModal
+│   │       ├── toast/          # ToastItem
+│   │       ├── Container.tsx
+│   │       ├── Grid.tsx
+│   │       ├── Loader.tsx
+│   │       ├── Scroll.tsx
+│   │       ├── Select.tsx
+│   │       ├── Separator.tsx
+│   │       ├── Switch.tsx
+│   │       ├── Text.tsx
+│   │       └── Title.tsx
+│   │
+│   ├── config/                 # Конфигурация
+│   │   ├── api.config.ts
+│   │   └── toast.config.tsx
+│   │
+│   ├── constants/              # Константы
+│   │   ├── colors.constant.ts
+│   │   ├── component.constant.ts
+│   │   ├── month.constant.ts
+│   │   ├── orderStatus.constant.ts
+│   │   └── regex.constant.ts
+│   │
+│   ├── hooks/                  # Кастомные хуки
+│   │   ├── navigation/         # useTypedNavigation, useTypedRoute
+│   │   ├── queries/            # React Query хуки
+│   │   ├── useAddressSuggestions.ts
+│   │   ├── useDebounce.ts
+│   │   └── useThemeMode.ts
+│   │
+│   ├── navigation/             # Навигация
+│   │   ├── stack/              # Stack навигаторы
+│   │   │   ├── cart/
+│   │   │   ├── favorite/
+│   │   │   ├── home/
+│   │   │   ├── profile/
+│   │   │   └── search/
+│   │   ├── tab/                # Tab навигатор
+│   │   │   └── TabNavigation.tsx
+│   │   ├── Navigation.tsx
+│   │   └── navigation.types.ts
+│   │
+│   ├── providers/              # Провайдеры
+│   │   ├── network/
+│   │   │   └── NetworkProvider.tsx
+│   │   ├── theme/
+│   │   │   └── ThemeProvider.tsx
+│   │   └── Providers.tsx
+│   │
+│   ├── services/               # API сервисы
+│   │   ├── address.service.ts
+│   │   ├── auth.service.ts
+│   │   ├── cart.service.ts
+│   │   ├── dadata.service.ts
+│   │   ├── favorite.service.ts
+│   │   ├── home.service.ts
+│   │   ├── order.service.ts
+│   │   ├── product.service.ts
+│   │   └── user.service.ts
+│   │
+│   ├── store/                  # Zustand сторы
+│   │   ├── auth.store.ts
+│   │   ├── cart.store.ts
+│   │   ├── favorites.store.ts
+│   │   ├── theme.store.ts
+│   │   └── index.ts
+│   │
+│   ├── styles/                 # Глобальные стили
+│   │   └── global.css
+│   │
+│   ├── types/                  # TypeScript типы
+│   │   ├── home/
+│   │   ├── address.types.ts
+│   │   ├── auth.types.ts
+│   │   ├── cart.types.ts
+│   │   ├── dadata.types.ts
+│   │   ├── favorite.types.ts
+│   │   ├── order.types.ts
+│   │   ├── product.types.ts
+│   │   ├── root.types.ts
+│   │   ├── user.types.ts
+│   │   └── index.ts
+│   │
+│   └── utils/                  # Утилиты
+│       ├── formatters/
+│       │   └── format.utils.ts
+│       ├── image.util.ts
+│       └── index.ts
+│
+├── App.tsx                     # Точка входа
+├── package.json
+├── tsconfig.json
+├── tailwind.config.js
+├── babel.config.js
+└── metro.config.js
+```
 
-Now that you have successfully run the app, let's make changes!
+---
 
-Open `App.tsx` in your text editor of choice and make some changes. When you save, your app will automatically update and reflect these changes — this is powered by [Fast Refresh](https://reactnative.dev/docs/fast-refresh).
+## 📱 Основные функции
 
-When you want to forcefully reload, for example to reset the state of your app, you can perform a full reload:
+### 🔐 Аутентификация
+- Регистрация с валидацией (email, пароль, телефон, дата рождения)
+- Вход по email/паролю
+- JWT токены с auto-refresh
+- Безопасное хранение в EncryptedStorage
 
-- **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Dev Menu**, accessed via <kbd>Ctrl</kbd> + <kbd>M</kbd> (Windows/Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (macOS).
-- **iOS**: Press <kbd>R</kbd> in iOS Simulator.
+### 🛒 Управление корзиной
+- **Офлайн-первый подход**: товары сохраняются локально
+- **Синхронизация**: при авторизации данные синхронизируются с сервером
+- **Оптимистичные обновления**: мгновенный отклик UI
+- **Разрешение конфликтов**: серверные данные приоритетны + добавление локальных товаров
 
-## Congratulations! :tada:
+### ❤️ Избранное
+- Локальное хранение с синхронизацией
+- Bulk-операции при синхронизации
+- Мгновенная реакция UI
 
-You've successfully run and modified your React Native App. :partying_face:
+### 🌐 Network-aware
+- Проверка подключения к интернету
+- Экран "Нет сети" с кнопкой повторной проверки
+- Автоматическое восстановление соединения
 
-### Now what?
+### 🎨 Темизация
+- Переключение тем в реальном времени
+- Сохранение выбора пользователя
+- Системная тема (автоопределение)
 
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [docs](https://reactnative.dev/docs/getting-started).
+### 📍 Адреса
+- Подсказки адресов через DaData API
+- Валидация в реальном времени
+- Адрес по умолчанию
 
-# Troubleshooting
+---
 
-If you're having issues getting the above steps to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
+## 🔒 Безопасность
 
-# Learn More
+- **JWT токены**: хранятся в EncryptedStorage
+- **Auto-refresh**: автоматическое обновление токенов
+- **Валидация форм**: Zod схемы для всех форм
+- **Безопасные запросы**: интерсепторы с обработкой ошибок
 
-To learn more about React Native, take a look at the following resources:
+---
 
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
+## 👤 Контакты
+
+**Автор**: Максимов Кирилл  
+**Email**: kmakismov@yandex.ru  
+**GitHub**: [github.com/MaksimovK](https://github.com/MaksimovK)  
+
+**Связанные проекты:**
+- [Food Hive API](https://github.com/MaksimovK/food-hive-server) — серверная часть
+
+---
+
+<div align="center">
+
+**Food Hive App** — создано с ❤️ для портфолио
+
+</div>
